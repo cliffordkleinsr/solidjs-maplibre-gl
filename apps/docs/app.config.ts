@@ -12,10 +12,16 @@ export default defineConfig(withSolidBase(
   },
   // SolidBase config
   {
-    title: "SolidBase",
-    titleTemplate: ":title - SolidBase",
+    title: "Solid MapLibre GL",
+    titleTemplate: ":title - Solid MapLibre GL",
     description: "Fully featured, fully customisable static site generation for SolidStart",
     themeConfig: {
+      nav: [
+        {
+          text: 'Reference',
+          link: '/reference'
+        }
+      ], 
       sidebar: {
         "/": {
           items: [
