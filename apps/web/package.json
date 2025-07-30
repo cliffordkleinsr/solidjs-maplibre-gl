@@ -7,7 +7,8 @@
     "astro": "5.12.5",
     "sharp": "^0.34.2",
     "solid-devtools": "^0.34.3",
-    "solid-js": "^1.9.7"
+    "solid-js": "^1.9.7",
+    "solidjs-maplibre-gl": "^0.0.3"
   },
   "scripts": {
     "dev": "astro dev",
@@ -16,8 +17,5 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "type": "module",
-  "devDependencies": {
-    "solidjs-maplibre-gl": "^0.0.2"
-  }
+  "type": "module"
 }

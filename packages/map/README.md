@@ -6,19 +6,17 @@
 
 [![bun](https://img.shields.io/badge/maintained%20with-bun-cc00ff.svg?style=for-the-badge&logo=bun)](https://bun.sh/)
 
-
-
-[![NPM Version](https://img.shields.io/npm/v/@shadcn-svelte-chat/cli
-)](https://www.npmjs.com/package/@shadcn-svelte-chat/cli) [![NPM Downloads](https://img.shields.io/npm/dw/@shadcn-svelte-chat/cli)](https://www.npmjs.com/package/@shadcn-svelte-chat/cli) [![Demo Website](https://img.shields.io/website?url=https%3A%2F%2Fshadcn-svelte-chat.vercel.app%2F)](https://shadcn-svelte-chat.vercel.app/) [![GitHub Repo stars](https://img.shields.io/github/stars/cliffordkleinsr/shadcn-svelte-chat)](https://github.com/cliffordkleinsr/shadcn-svelte-chat)
-
+[![NPM Version](https://img.shields.io/npm/v/@shadcn-svelte-chat/cli)](https://www.npmjs.com/package/@shadcn-svelte-chat/cli) [![NPM Downloads](https://img.shields.io/npm/dw/@shadcn-svelte-chat/cli)](https://www.npmjs.com/package/@shadcn-svelte-chat/cli) [![Demo Website](https://img.shields.io/website?url=https%3A%2F%2Fshadcn-svelte-chat.vercel.app%2F)](https://shadcn-svelte-chat.vercel.app/) [![GitHub Repo stars](https://img.shields.io/github/stars/cliffordkleinsr/shadcn-svelte-chat)](https://github.com/cliffordkleinsr/shadcn-svelte-chat)
 
 🗺️ Build interactive web maps effortlessly with [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) and [Solidjs](https://www.solidjs.com/).
 
 ### Features:
+
 - A flexible, minimally opinionated API design that is suitable for both beginners and experienced MapLibre users
 - Traditional imperative MapLibre GL JS usage remains fully supported
 
 ## Quick start
+
 👉 Documentaion and Live Demos: https://svelte-maplibre-gl.mierune.dev/examples/
 
 ## Installation
@@ -34,10 +32,11 @@ pnpm add solidjs-maplibre-gl
 ```
 
 ## License
-Licensed under **MIT** 
 
+Licensed under **MIT**
 
 ## Acknowledgements
+
 This project draws strong inspiration from the works of the following libraries:
 
 - [`shishkin/solid-maplibre`](https://github.com/shishkin/solid-maplibre) &mdash; SolidJS wrapper around MapLibre GL JS.
@@ -46,17 +45,19 @@ This project draws strong inspiration from the works of the following libraries:
 - [`MapLibre GL JS`](https://maplibre.org/) &mdash; Open-source TypeScript library for publishing maps on your website. Great performance due to GPU-accelerated vector tile rendering.
 
 ## Contributing
+
 Everyone is welcome to contribute to this project! There are many ways to support it, such as:
+
 - Trying it out and reporting any issues or missing features
 
 - Expanding, improving, or suggesting new examples
 - Any other ideas you might have!
 
-
 ## Authors
+
 See Contributors [list](https://github.com/MIERUNE/svelte-maplibre-gl/graphs/contributors)
 Use it:
 
-
 ---
+
 #### This project was created with the [Solid CLI](https://github.com/solidjs-community/solid-cli)

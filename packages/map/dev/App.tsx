@@ -8,7 +8,7 @@ import {
 import logo from "./logo.svg";
 import styles from "./App.module.css";
 
-import type { FeatureCollection } from 'geojson'
+import type { FeatureCollection } from "geojson";
 import {
 	MapsProvider,
 	Maplibre,
@@ -19,12 +19,16 @@ import {
 	Source,
 	Layer,
 	TerrainControl,
-	useMaps
-} from 'src'
+	useMaps,
+} from "src";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { LngLatLike } from "maplibre-gl";
 const App: Component = () => {
-	const [visible, setVisible] = createSignal<boolean>(false);
+	const [visible, setVisible] = createSignal<boolean>(true);
+	const [lnglat, setLngLat] = createSignal<LngLatLike>([12.88, 48.1]);
 	const [popupInstance, setPopupInstance] = createSignal<maplibregl.Popup>();
+
+	//   createEffect(() => console.log(lnglat()))
 	return (
 		<div class={styles.App}>
 			<MapsProvider>
@@ -132,6 +136,39 @@ const App: Component = () => {
 							exaggeration: 1.5,
 						}}
 					/>
+				</Maplibre>
+
+				<Maplibre
+					style={{
+						height: "400px",
+						width: "100%",
+					}}
+					options={{
+						style: "https://tiles.openfreemap.org/styles/positron",
+						zoom: 10,
+						center: [12.86, 48.07],
+					}}
+				>
+					<Marker
+						lnglat={lnglat()}
+						draggable
+						onclick={(e) => {
+							setVisible(!visible());
+						}}
+						ondrag={(e) => {
+							setLngLat(e.target.getLngLat().toArray());
+						}}
+					/>
+					{/* <Show when={visible()}> */}
+					<Popup
+						anchor="top"
+						content="you are here"
+						position={lnglat()}
+						onClose={() => {
+							setVisible(false);
+						}}
+					/>
+					{/* </Show> */}
 				</Maplibre>
 			</MapsProvider>
 		</div>

@@ -1,6 +1,6 @@
 import { useMapEffect } from "./map.jsx";
 import * as maplibre from "maplibre-gl";
-import { onCleanup, splitProps } from "solid-js";
+import { createEffect, onCleanup, splitProps } from "solid-js";
 
 export type PopUpProps = Partial<maplibre.PopupOptions> & {
 	position?: maplibre.LngLatLike;
@@ -44,7 +44,7 @@ export type PopUpProps = Partial<maplibre.PopupOptions> & {
  * @returns {JSX.Element} An empty fragment as the popup is handled by MapLibre
  */
 
-export type PopupInstance = maplibre.Popup
+export type PopupInstance = maplibre.Popup;
 export function Popup(initial: PopUpProps) {
 	const [props, options] = splitProps(initial, [
 		"position",
@@ -59,12 +59,10 @@ export function Popup(initial: PopUpProps) {
 		if (!map || !props.content) return;
 
 		requestAnimationFrame(() => {
-			popup = new maplibre.Popup(options);
+			popup = new maplibre.Popup(options).setHTML(props.content!);
 
 			if (props.position) {
 				popup.setLngLat(props.position).addTo(map); // Standalone popup
-			} else {
-				popup.setHTML(props.content!); // Marker will handle addTo + position
 			}
 
 			if (props.onClose) popup.on("close", props.onClose);

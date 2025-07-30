@@ -66,3 +66,5 @@ export const GeolocateControl = createControl(maplibre.GeolocateControl);
 export const LogoControl = createControl(maplibre.LogoControl);
 
 export const TerrainControl = createControl(maplibre.TerrainControl);
+
+export const GlobeControl = createControl(maplibre.GlobeControl);
