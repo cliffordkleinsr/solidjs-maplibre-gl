@@ -1,0 +1,23 @@
+{
+  "name": "web",
+  "version": "0.0.1",
+  "dependencies": {
+    "@astrojs/solid-js": "^5.1.0",
+    "@astrojs/starlight": "^0.35.2",
+    "astro": "5.12.5",
+    "sharp": "^0.34.2",
+    "solid-devtools": "^0.34.3",
+    "solid-js": "^1.9.7"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "type": "module",
+  "devDependencies": {
+    "solidjs-maplibre-gl": "^0.0.2"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "example-with-solidbase",
+  "name": "solidjs-maplibre-docs",
   "type": "module",
   "scripts": {
     "dev": "vinxi dev",

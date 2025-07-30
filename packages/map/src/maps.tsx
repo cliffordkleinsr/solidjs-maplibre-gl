@@ -6,7 +6,7 @@ import {
 	JSX,
 	Accessor,
 } from "solid-js";
-import "maplibre-gl/dist/maplibre-gl.css";
+
 export interface MapsContextValue {
 	maps: Accessor<Map<string, maplibre.Map>>;
 	onMapMount: (map: maplibre.Map, id: string) => void;

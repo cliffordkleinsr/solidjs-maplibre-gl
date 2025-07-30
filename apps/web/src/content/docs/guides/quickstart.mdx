@@ -1,0 +1,100 @@
+---
+title: Quickstart   
+description: Get started with solidjs-maplibre-gl in just a few minutes.
+---
+
+To get started with `solidjs-maplibre-gl` in just a few minutes, follow the steps below
+
+import { Steps } from '@astrojs/starlight/components';
+import SimpleMap from "../../../components/examples/Simplemap";
+import SimpleMarker from "../../../components/examples/Simplemarker"
+
+<Steps>
+
+1. Initialize a new solidjs project:
+
+   ```bash
+        bun create solid
+        # or
+        pnpm create solid
+        # or
+        yarn create solid
+    ```
+
+2. Install the package from npm:
+   ```bash
+      bun add -D solidjs-maplibre-gl
+   ```
+
+3. Add an example map to the root `App.tsx` or your route `index.tsx`
+   ```tsx title="App.tsx"
+    import type { Component } from 'solid-js';
+    import { Maplibre } from 'solidjs-maplibre-gl';
+    import 'maplibre-gl/dist/maplibre-gl.css';
+
+    const App: Component = () => {
+        return (
+            <Maplibre
+					style={{
+						height: "400px",
+						width: "100%",
+					}}
+					options={{
+						style:
+							"https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+					}}
+			/>
+
+        )
+    }
+    ```
+
+    <div class="not-content" tabindex="-1">
+        <SimpleMap client:visible/>
+    </div>
+
+    :::note
+        - Height must be set, otherwise the map size will be zero!
+        - The `maplibre-gl.css` file must be imported for the attribution tooltips to work as intended!
+        - You can use the style directive to apply classes the Map component or alternatively a css classname for instances with tailwind usage.
+    :::
+4. The `Maplibre` component accepts children props such as `markers`, `tooltips` ... etc. Lets add a `Marker` child to the `Maplibre` component.
+    ```tsx title="App.tsx" del={17} ins={18, 19, 20}
+        import type { Component } from 'solid-js';
+        import { Maplibre, Marker } from 'solidjs-maplibre-gl'
+        import 'maplibre-gl/dist/maplibre-gl.css';
+
+        const App: Component = () => {
+            return (
+                <Maplibre
+                        style={{
+                            height: "400px",
+                            width: "100%",
+                        }}
+                        options={{
+                            style:"https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+                            center: [142, 43],
+                            zoom:5
+                        }}
+                />
+                >
+                    <Marker lnglat={[141.692222, 42.775]} />
+                </Maplibre>
+
+            )
+        }
+    ```
+    <div class="not-content" tabindex="-1">
+        <SimpleMarker client:visible/>
+    </div>
+</Steps>
+
+And thats it! You've set up your fust map with `solidjs-maplibre-gl`
+:::tip{icon="heart"}
+When in doubt hover over any component to understand its underlying properties and any associated examples it may carry.
+:::
+
+
+## Further reading
+
+- See the [reference](/reference) guide to understand how to work with the library

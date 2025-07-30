@@ -21,7 +21,7 @@ import {
 	TerrainControl,
 	useMaps
 } from 'src'
-
+import "maplibre-gl/dist/maplibre-gl.css";
 const App: Component = () => {
 	const [visible, setVisible] = createSignal<boolean>(false);
 	const [popupInstance, setPopupInstance] = createSignal<maplibregl.Popup>();
