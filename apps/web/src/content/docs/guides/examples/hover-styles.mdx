@@ -46,8 +46,7 @@ const HoverStyle: Component<{}> = (props) => {
             type: 'geojson',
             data: 'https://maplibre.org/maplibre-gl-js/docs/assets/us_states.geojson'
         }}>
-            <Layer 
-                id="fill-layer"
+            <FillLayer 
                 layer={{
                     type: 'fill',
                     paint: {
@@ -65,8 +64,7 @@ const HoverStyle: Component<{}> = (props) => {
                     sethoveredFeature(undefined)
                 }}
             />
-            <Layer
-                id="line-layer"
+            <LineLayer
                 layer={{
                     type: 'line',
                     paint: {

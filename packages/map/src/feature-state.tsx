@@ -2,9 +2,9 @@ import { onCleanup, splitProps } from "solid-js";
 import { useMapEffect, useMap } from "./map";
 
 type FeatureStateProps = {
-	source: string;
-	id?: string | number;
-	state: Record<string, any>;
+  source: string;
+  id?: string | number;
+  state: Record<string, any>;
 };
 
 /**
@@ -38,16 +38,16 @@ type FeatureStateProps = {
  * @returns An empty fragment
  */
 export function FeatureState(initial: FeatureStateProps) {
-	const [props] = splitProps(initial, ["source", "id", "state"]);
+  const [props] = splitProps(initial, ["source", "id", "state"]);
 
-	useMapEffect((map) => {
-		map.setFeatureState({ source: props.source, id: props.id }, props.state);
-		onCleanup(() => {
-			if (map) {
-				map.setFeatureState({ source: props.source, id: props.id }, {});
-			}
-		});
-	});
+  useMapEffect((map) => {
+    map.setFeatureState({ source: props.source, id: props.id }, props.state);
+    onCleanup(() => {
+      if (map) {
+        map.setFeatureState({ source: props.source, id: props.id }, {});
+      }
+    });
+  });
 
-	return <></>;
+  return <></>;
 }

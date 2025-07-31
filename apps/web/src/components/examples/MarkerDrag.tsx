@@ -1,7 +1,4 @@
-import {
-  createSignal,
-  type Component,
-} from "solid-js";
+import { createSignal, type Component } from "solid-js";
 import { Maplibre, Marker } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { LngLatLike } from "maplibre-gl";
@@ -24,26 +21,32 @@ const MarkerDrag: Component = (props) => {
         lnglat={lnglat()}
         draggable
         ondrag={(e) => {
-          e.originalEvent?.stopPropagation()
-          const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
+          e.originalEvent?.stopPropagation();
+          const coords = e.target
+            .getLngLat()
+            .toArray()
+            .map((v) => +v.toFixed(3));
           setLngLat(coords as [number, number]);
         }}
         ondragend={(e) => {
-          e.originalEvent?.stopPropagation()
-          const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
+          e.originalEvent?.stopPropagation();
+          const coords = e.target
+            .getLngLat()
+            .toArray()
+            .map((v) => +v.toFixed(3));
           setLngLat(coords as [number, number]);
         }}
       />
 
-      <p style={{
-        padding: "1.1rem 2rem",
-        color: 'black',
-        background: "white"
-      }}>{`long, lat: ${lnglat()}`}</p>
+      <p
+        style={{
+          padding: "1.1rem 2rem",
+          color: "black",
+          background: "white",
+        }}
+      >{`long, lat: ${lnglat()}`}</p>
     </Maplibre>
   );
 };
 
 export default MarkerDrag;
-
-

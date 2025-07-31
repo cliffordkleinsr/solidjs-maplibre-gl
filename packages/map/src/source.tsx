@@ -1,18 +1,18 @@
 import * as maplibre from "maplibre-gl";
 import {
-	createContext,
-	JSX,
-	onCleanup,
-	useContext,
-	createUniqueId,
-	createMemo,
+  createContext,
+  JSX,
+  onCleanup,
+  useContext,
+  createUniqueId,
+  createMemo,
 } from "solid-js";
 import { useMapEffect, useMap } from "./map.jsx";
 
 export interface SourceProps {
-	id?: string;
-	source: maplibre.SourceSpecification;
-	children?: JSX.Element;
+  id?: string;
+  source: maplibre.SourceSpecification;
+  children?: JSX.Element;
 }
 
 export const SourceIdContext = createContext<string | undefined>();
@@ -47,20 +47,33 @@ export const useSource = () => useContext(SourceIdContext);
  * @see {@link https://maplibre.org/maplibre-gl-js-docs/api/sources/ MapLibre GL JS Sources}
  */
 export function Source(props: SourceProps) {
-	const id = createMemo(() => props.id ?? createUniqueId());
+  const id = createMemo(() => props.id ?? createUniqueId());
 
-	useMapEffect((map) => {
-		if (!map.getSource(id())) {
-			map.addSource(id(), props.source);
-		}
-	});
+  useMapEffect((map) => {
+    // Initial source creation
+    if (!map.getSource(id())) {
+      map.addSource(id(), props.source);
+    }
 
-	onCleanup(
-		() => useMap()?.()?.getSource(id()) && useMap()?.()?.removeSource(id()),
-	);
-	return (
-		<SourceIdContext.Provider value={id()}>
-			{props.children}
-		</SourceIdContext.Provider>
-	);
+    // Create effect to watch for source changes
+      const source = map.getSource(id());
+      if (source && props.source.type === 'image') {
+        // Use updateImage for image sources
+        //@ts-expect-error
+        source.updateImage({
+          url: props.source.url,
+          coordinates: props.source.coordinates
+        });
+      }
+  });
+
+  onCleanup(
+    () => useMap()?.()?.getSource(id()) && useMap()?.()?.removeSource(id()),
+  );
+  
+  return (
+    <SourceIdContext.Provider value={id()}>
+      {props.children}
+    </SourceIdContext.Provider>
+  );
 }

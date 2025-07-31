@@ -1,37 +1,45 @@
-import { onCleanup, splitProps, createSignal, type JSX, type Component, Show } from "solid-js";
+import {
+  onCleanup,
+  splitProps,
+  createSignal,
+  type JSX,
+  type Component,
+  Show,
+} from "solid-js";
 import { Maplibre, Marker, useMapEffect } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type {
   MaplibreGeocoderApi,
-  MaplibreGeocoderOptions
-} from '@maplibre/maplibre-gl-geocoder';
+  MaplibreGeocoderOptions,
+} from "@maplibre/maplibre-gl-geocoder";
 import * as maplibre from "maplibre-gl";
-import  MaplibreGeocoder from '@maplibre/maplibre-gl-geocoder';
-import '@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css';
+import MaplibreGeocoder from "@maplibre/maplibre-gl-geocoder";
+import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
 
 const Geocoder: Component = (props) => {
-  
   return (
     <Maplibre
-        style={{
-            height: "55vh",
-            "min-height":'300px'
-        }}
-        options={{
-            center: [-79.4512, 43.6568],
-            zoom: 13,
-            style:"https://tiles.openfreemap.org/styles/bright"
-        }}
+      style={{
+        height: "55vh",
+        "min-height": "300px",
+      }}
+      options={{
+        center: [-79.4512, 43.6568],
+        zoom: 13,
+        style: "https://tiles.openfreemap.org/styles/bright",
+      }}
     >
-        <GeocoderControl position="top-left"/>
+      <GeocoderControl position="top-left" marker={true} />
     </Maplibre>
   );
 };
 
 export default Geocoder;
 
-
-type GeocoderControlProps = Omit<MaplibreGeocoderOptions, "maplibregl" | "marker"> & {
+type GeocoderControlProps = Omit<
+  MaplibreGeocoderOptions,
+  "maplibregl" | "marker"
+> & {
   marker?: boolean | Partial<maplibregl.MarkerOptions>;
   position?: maplibregl.ControlPosition;
   onLoading?: (e: any) => void;
@@ -41,7 +49,7 @@ type GeocoderControlProps = Omit<MaplibreGeocoderOptions, "maplibregl" | "marker
 };
 
 const geocoderApi: MaplibreGeocoderApi = {
-    // @ts-expect-error
+  // @ts-expect-error
   forwardGeocode: async (config) => {
     const features = [];
     try {
@@ -51,7 +59,7 @@ const geocoderApi: MaplibreGeocoderApi = {
       for (const feature of geojson.features) {
         const center = [
           feature.bbox[0] + (feature.bbox[2] - feature.bbox[0]) / 2,
-          feature.bbox[1] + (feature.bbox[3] - feature.bbox[1]) / 2
+          feature.bbox[1] + (feature.bbox[3] - feature.bbox[1]) / 2,
         ];
         features.push({
           type: "Feature",
@@ -60,14 +68,14 @@ const geocoderApi: MaplibreGeocoderApi = {
           properties: feature.properties,
           text: feature.properties.display_name,
           place_type: ["place"],
-          center
+          center,
         });
       }
     } catch (e) {
       console.error("Geocode error", e);
     }
     return { features };
-  }
+  },
 };
 
 export function GeocoderControl(initial: GeocoderControlProps): JSX.Element {
@@ -77,21 +85,21 @@ export function GeocoderControl(initial: GeocoderControlProps): JSX.Element {
     "onLoading",
     "onResults",
     "onResult",
-    "onError"
+    "onError",
   ]);
   const [markerLngLat, setMarkerLngLat] = createSignal<maplibregl.LngLatLike>();
 
   useMapEffect((map) => {
     const control = new MaplibreGeocoder(geocoderApi, {
       ...rest,
-      marker: true,
-      maplibregl: maplibre
+      marker: false,
+      maplibregl: maplibre,
     });
 
     if (props.onLoading) control.on("loading", props.onLoading);
     if (props.onResults) control.on("results", props.onResults);
     if (props.onError) control.on("error", props.onError);
-    
+
     control.on("result", (e) => {
       props.onResult?.(e);
       const result = e.result;
@@ -104,7 +112,7 @@ export function GeocoderControl(initial: GeocoderControlProps): JSX.Element {
     });
 
     map.addControl(control, props.position || "top-right");
-    
+
     onCleanup(() => {
       map.removeControl(control);
     });
@@ -112,11 +120,10 @@ export function GeocoderControl(initial: GeocoderControlProps): JSX.Element {
 
   return (
     <Show when={markerLngLat()}>
-        <Marker
-            lnglat={markerLngLat()!}
-            {...(typeof props.marker === "object" ? props.marker : {})}
-            
-        />
+      <Marker
+        lnglat={markerLngLat()!}
+        {...(typeof props.marker === "object" ? props.marker : {})}
+      />
     </Show>
-  )
+  );
 }

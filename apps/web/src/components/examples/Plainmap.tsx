@@ -1,5 +1,10 @@
 import type { Component } from "solid-js";
-import { Maplibre, NavigationControl, ScaleControl, GlobeControl } from "solidjs-maplibre-gl";
+import {
+  Maplibre,
+  NavigationControl,
+  ScaleControl,
+  GlobeControl,
+} from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 const Plainmap: Component<{}> = (props) => {
   return (
@@ -15,7 +20,7 @@ const Plainmap: Component<{}> = (props) => {
     >
       <NavigationControl />
       <ScaleControl />
-      <GlobeControl />  
+      <GlobeControl />
     </Maplibre>
   );
 };

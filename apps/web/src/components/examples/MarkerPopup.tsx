@@ -1,8 +1,4 @@
-import {
-  createSignal,
-  type Component,
-  type JSX,
-} from "solid-js";
+import { createSignal, type Component, type JSX } from "solid-js";
 import { Maplibre, Marker, Popup } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { LngLatLike } from "maplibre-gl";
@@ -25,14 +21,10 @@ const MarkerPopup: Component<{
         center: [12.86, 48.07],
       }}
     >
-      <Marker
-        lnglat={lnglat()}
-        draggable
-        popup={popupInstance()}
-      >
+      <Marker lnglat={lnglat()} draggable popup={popupInstance()}>
         {props.children}
       </Marker>
-      <Popup content='You are here' anchor="top" ref={setPopupInstance} />
+      <Popup content="You are here" anchor="top" ref={setPopupInstance} />
     </Maplibre>
   );
 };

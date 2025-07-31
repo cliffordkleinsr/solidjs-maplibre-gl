@@ -44,26 +44,26 @@ import { Steps } from '@astrojs/starlight/components';
     forwardGeocode: async (config) => {
         const features = [];
         try {
-        const request = `https://nominatim.openstreetmap.org/search?q=${config.query}&format=geojson&polygon_geojson=1&addressdetails=1`;
-        const response = await fetch(request);
-        const geojson = await response.json();
-        for (const feature of geojson.features) {
-            const center = [
-            feature.bbox[0] + (feature.bbox[2] - feature.bbox[0]) / 2,
-            feature.bbox[1] + (feature.bbox[3] - feature.bbox[1]) / 2
-            ];
-            features.push({
-            type: "Feature",
-            geometry: { type: "Point", coordinates: center },
-            place_name: feature.properties.display_name,
-            properties: feature.properties,
-            text: feature.properties.display_name,
-            place_type: ["place"],
-            center
-            });
+            const request = `https://nominatim.openstreetmap.org/search?q=${config.query}&format=geojson&polygon_geojson=1&addressdetails=1`;
+            const response = await fetch(request);
+            const geojson = await response.json();
+            for (const feature of geojson.features) {
+                const center = [
+                    feature.bbox[0] + (feature.bbox[2] - feature.bbox[0]) / 2,
+                    feature.bbox[1] + (feature.bbox[3] - feature.bbox[1]) / 2
+                ];
+                features.push({
+                    type: "Feature",
+                    geometry: { type: "Point", coordinates: center },
+                    place_name: feature.properties.display_name,
+                    properties: feature.properties,
+                    text: feature.properties.display_name,
+                    place_type: ["place"],
+                    center
+                });
         }
         } catch (e) {
-        console.error("Geocode error", e);
+            console.error("Geocode error", e);
         }
         return { features };
     }
@@ -90,9 +90,9 @@ import { Steps } from '@astrojs/starlight/components';
 
         useMapEffect((map) => {
             const control = new MaplibreGeocoder(geocoderApi, {
-            ...rest,
-            marker: true,
-            maplibregl: maplibre
+                ...rest,
+                marker: true,
+                maplibregl: maplibre
             });
 
             if (props.onLoading) control.on("loading", props.onLoading);
@@ -100,14 +100,14 @@ import { Steps } from '@astrojs/starlight/components';
             if (props.onError) control.on("error", props.onError);
             
             control.on("result", (e) => {
-            props.onResult?.(e);
-            const result = e.result;
-            const coords = result.center || result.geometry?.coordinates;
-            if (coords && props.marker) {
-                setMarkerLngLat(coords);
-            } else {
-                setMarkerLngLat(undefined);
-            }
+                props.onResult?.(e);
+                const result = e.result;
+                const coords = result.center || result.geometry?.coordinates;
+                if (coords && props.marker) {
+                    setMarkerLngLat(coords);
+                } else {
+                    setMarkerLngLat(undefined);
+                }
             });
 
             map.addControl(control, props.position || "top-right");
@@ -150,7 +150,7 @@ import { Steps } from '@astrojs/starlight/components';
                 style:"https://tiles.openfreemap.org/styles/bright"
             }}
         >
-            <GeocoderControl position="top-left"/>
+            <GeocoderControl position="top-left" marker={true}/>
         </Maplibre>
     );
     };
