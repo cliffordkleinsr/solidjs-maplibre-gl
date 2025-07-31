@@ -1,0 +1,31 @@
+.checkbox {
+    display: flex;
+    align-items: center;
+
+    > input {
+        flex-shrink: 0;
+        margin-top: 2px;
+        border: 1px solid oklab(from grey l a b /0.2);
+        border-radius: 4rem;
+        color: oklab(from white l a b /0.6);
+        height: 17px;
+        width: 17px;
+
+        &:focus, &:checked {
+            outline: 2px solid hsl(200 98% 39%);
+            outline-offset: 2px;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+    }
+    > label {
+        margin-left: 6px;
+        font-size: medium;
+        color: white;
+        user-select: none;
+    }
+}

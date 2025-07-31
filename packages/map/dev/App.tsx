@@ -17,12 +17,14 @@ import {
 	NavigationControl,
 	FullScreenControl,
 	Source,
-	Layer,
 	TerrainControl,
 	useMaps,
+	CircleLayer,
+	HillshadeLayer,
 } from "src";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { LngLatLike } from "maplibre-gl";
+import Cluster from "./Cluster";
 const App: Component = () => {
 	const [visible, setVisible] = createSignal<boolean>(true);
 	const [lnglat, setLngLat] = createSignal<LngLatLike>([12.88, 48.1]);
@@ -75,8 +77,7 @@ const App: Component = () => {
 							data: geojson,
 						}}
 					>
-						<Layer
-							id="point"
+						<CircleLayer
 							layer={{
 								type: "circle",
 								paint: {
@@ -117,8 +118,7 @@ const App: Component = () => {
 							tileSize: 256,
 						}}
 					>
-						<Layer
-							id="dem"
+						<HillshadeLayer
 							layer={{
 								type: "hillshade",
 								layout: {
@@ -170,6 +170,7 @@ const App: Component = () => {
 					/>
 					{/* </Show> */}
 				</Maplibre>
+				<Cluster />
 			</MapsProvider>
 		</div>
 	);

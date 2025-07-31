@@ -1,13 +1,14 @@
 import * as maplibre from "maplibre-gl";
-import { onCleanup, createUniqueId, splitProps, createMemo } from "solid-js";
+import {
+	onCleanup,
+	createUniqueId,
+	splitProps,
+	createMemo,
+	JSX,
+} from "solid-js";
 import { useMapEffect, useMap } from "./map.jsx";
 import { useSource } from "./source.jsx";
 import { deepEqual } from "./util.js";
-
-export type LayerProps = {
-	id?: string;
-	layer: Omit<maplibre.LayerSpecification, "id" | "source">;
-} & LayerEvents;
 
 type LayerEvents = Partial<{
 	[P in keyof maplibre.MapLayerEventType as `on${P}`]: (
@@ -15,89 +16,81 @@ type LayerEvents = Partial<{
 	) => void;
 }>;
 
-/**
- * A component that adds a layer to a maplibre map.
- *
- * @component
- * @param {LayerProps} initial - The initial properties for the layer
- * @param {string} [initial.id] - Optional unique identifier for the layer. If not provided, a unique ID will be generated
- * @param {Omit<maplibre.LayerSpecification, "id" | "source">} initial.layer - The layer specification without id and source properties
- * @param {LayerEvents} [initial.events] - Optional event handlers for the layer. Events should be prefixed with "on"
- *
- * @example
- * ```tsx
- * <Layer
- *   id="my-layer"
- *   layer={{
- *     type: "fill",
- *     paint: {
- *       "fill-color": "#ff0000"
- *     }
- *   }}
- *   onClick={(e) => console.log("Layer clicked", e)}
- * />
- * ```
- *
- * @remarks
- * - The layer must be used within a Source component context
- * - Layer properties can be updated dynamically
- * - The layer will be automatically removed when the component unmounts
- * - Supports all maplibre layer events through onEventName props
- *
- * @returns An empty fragment
- */
-export function Layer(initial: LayerProps) {
-	const [props, events] = splitProps(initial, ["id", "layer"]);
-	const id = createMemo(() => props.id ?? createUniqueId());
-	const sourceId = useSource();
+type BaseLayerProps<T extends maplibre.LayerSpecification> = {
+	id?: string;
+	layer: Omit<T, "id" | "source">;
+} & LayerEvents;
 
-	useMapEffect((map) => {
-		if (!sourceId || map.getLayer(id())) return;
+export function createLayerComponent<T extends maplibre.LayerSpecification>() {
+	return function LayerComponent(initialProps: BaseLayerProps<T>): JSX.Element {
+		const [props, events] = splitProps(initialProps, ["id", "layer"]);
+		const id = createMemo(() => props.id ?? createUniqueId());
+		const sourceId = useSource();
 
-		const layer = {
-			...props.layer,
-			id: id(),
-			source: sourceId,
-		} as any;
+		useMapEffect((map) => {
+			if (!sourceId || map.getLayer(id())) return;
 
-		map.addLayer(layer);
-	});
+			map.addLayer({
+				...props.layer,
+				id: id(),
+				source: sourceId,
+			} as T);
+		});
 
-	// Safely update filter if layer supports it
-	useMapEffect((map) => {
-		if (!map.getLayer(id())) return;
+		useMapEffect((map) => {
+			if (!map.getLayer(id())) return;
 
-		if (props.layer.paint) {
-			for (const [k, v] of Object.entries(props.layer.paint)) {
+			for (const [k, v] of Object.entries(props.layer.paint ?? {})) {
 				const old = map.getPaintProperty(id(), k);
 				if (!deepEqual(old, v)) {
 					map.setPaintProperty(id(), k, v);
 				}
 			}
-		}
 
-		if (
-			"filter" in props.layer &&
-			props.layer.filter !== undefined &&
-			!deepEqual(map.getFilter(id()), props.layer.filter)
-		) {
-			map.setFilter(id(), props.layer.filter as maplibre.FilterSpecification);
-		}
-	});
+			const oldFilter = map.getFilter(id()); //@ts-expect-error
+			if (!deepEqual(oldFilter, props.layer.filter)) {
+				//@ts-expect-error
+				map.setFilter(id(), props.layer.filter);
+			}
+		});
 
-	useMapEffect((map) => {
-		for (const [key, handler] of Object.entries(events)) {
-			if (!key.startsWith("on")) continue;
+		useMapEffect((map) => {
+			for (const [key, handler] of Object.entries(events)) {
+				if (!key.startsWith("on")) continue;
+				const name = key.slice(2).toLowerCase();
+				map.on(name as never, id(), handler as never);
+				onCleanup(() => map.off(name as never, id(), handler));
+			}
+		});
 
-			const name = key.slice(2).toLowerCase();
-			map.on(name as never, id(), handler as never);
-			onCleanup(() => map.off(name as never, id(), handler));
-		}
-	});
+		onCleanup(() => {
+			const map = useMap()?.();
+			if (map?.getLayer(id())) {
+				map.removeLayer(id());
+			}
+		});
 
-	onCleanup(
-		() => useMap()?.()?.getLayer(id()) && useMap()?.()?.removeLayer(id()),
-	);
-
-	return <></>;
+		return <></>;
+	};
 }
+
+export const CircleLayer =
+	createLayerComponent<maplibre.CircleLayerSpecification>();
+export const LineLayer =
+	createLayerComponent<maplibre.LineLayerSpecification>();
+export const SymbolLayer =
+	createLayerComponent<maplibre.SymbolLayerSpecification>();
+export const HillshadeLayer =
+	createLayerComponent<maplibre.HillshadeLayerSpecification>();
+export const FillLayer =
+	createLayerComponent<maplibre.FillLayerSpecification>();
+export const FillExtrusionLayer =
+	createLayerComponent<maplibre.FillExtrusionLayerSpecification>();
+export const RasterLayer =
+	createLayerComponent<maplibre.RasterLayerSpecification>();
+export const HeatmapLayer =
+	createLayerComponent<maplibre.HeatmapLayerSpecification>();
+export const BackgroundLayer =
+	createLayerComponent<maplibre.BackgroundLayerSpecification>();
+export const ColorReliefLayer =
+	createLayerComponent<maplibre.ColorReliefLayerSpecification>();

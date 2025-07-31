@@ -24,18 +24,22 @@ export default defineConfig({
             },
             { 
                 label: 'Examples',
-                items: [
-                    // Each item here is one entry in the navigation menu.
-                    {
-						label: 'Plain Map',
-						slug: 'guides/examples/plain',
-					},
-                    {
-						label: 'Marker and Popup',
-						slug: 'guides/examples/marker-popup',
-					},
-                   
-                ],
+                autogenerate: {directory: 'guides/examples'}
+            //     items: [
+            //         // Each item here is one entry in the navigation menu.
+            //         {
+			// 			label: 'Plain Map',
+			// 			slug: 'guides/examples/plain',
+			// 		},
+            //         {
+			// 			label: 'Marker and Popup',
+			// 			slug: 'guides/examples/marker-popup',
+			// 		},
+            //        {
+			// 			label: 'Draggable Marker',
+			// 			slug: 'guides/examples/draggable-markers',
+			// 		},
+            //     ],
             },
             {
                 label: 'Reference',

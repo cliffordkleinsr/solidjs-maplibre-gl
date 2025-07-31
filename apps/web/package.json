@@ -4,11 +4,12 @@
   "dependencies": {
     "@astrojs/solid-js": "^5.1.0",
     "@astrojs/starlight": "^0.35.2",
-    "astro": "5.12.5",
-    "sharp": "^0.34.2",
+    "@maplibre/maplibre-gl-geocoder": "^1.9.0",
+    "astro": "5.12.6",
+    "sharp": "^0.34.3",
     "solid-devtools": "^0.34.3",
     "solid-js": "^1.9.7",
-    "solidjs-maplibre-gl": "^0.0.3"
+    "solidjs-maplibre-gl": "^0.0.5"
   },
   "scripts": {
     "dev": "astro dev",

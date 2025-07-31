@@ -1,9 +1,12 @@
 ---
 title: Marker and Popup
 description: Control marker and popup using solidjs signals.
+tableOfContents: false
+sidebar: 
+    order: 2
 ---
 
-This example depicts a custom control marker and popup bound using solid js reactivity.
+This example depicts a custom marker icon with an anchored popup Instance.
 
 import MarkerPopup, { Icon } from '../../../../components/examples/MarkerPopup'
 
@@ -12,3 +15,48 @@ import MarkerPopup, { Icon } from '../../../../components/examples/MarkerPopup'
       <Icon />
     </MarkerPopup>
 </div>
+:::note
+Click on the doge icon on the map to show the marker
+<Icon /> 
+:::
+
+```tsx
+import {
+  createSignal,
+  type Component,
+  type JSX,
+} from "solid-js";
+import { Maplibre, Marker, Popup } from "solidjs-maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
+import type { LngLatLike } from "maplibre-gl";
+
+const MarkerPopup: Component = (props) => {
+  const [lnglat, setLngLat] = createSignal<LngLatLike>([12.88, 48.1]);
+  const [popupInstance, setPopupInstance] = createSignal<maplibregl.Popup>();
+
+  return (
+    <Maplibre
+      style={{
+        height: "400px",
+        width: "100%",
+      }}
+      options={{
+        style: "https://tiles.openfreemap.org/styles/positron",
+        zoom: 10,
+        center: [12.86, 48.07],
+      }}
+    >
+      <Marker
+        lnglat={lnglat()}
+        draggable
+        popup={popupInstance()}
+      >
+        <Doge />
+      </Marker>
+      <Popup content='You are here' anchor="top" ref={setPopupInstance} />
+    </Maplibre>
+  );
+};
+
+export default MarkerPopup;
+```

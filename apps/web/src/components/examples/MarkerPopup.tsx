@@ -1,7 +1,5 @@
 import {
-  createEffect,
   createSignal,
-  Show,
   type Component,
   type JSX,
 } from "solid-js";
@@ -31,25 +29,10 @@ const MarkerPopup: Component<{
         lnglat={lnglat()}
         draggable
         popup={popupInstance()}
-        ondrag={(e) => {
-          e.originalEvent?.stopPropagation()
-          const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
-          setLngLat(coords as [number, number]);
-        }}
-        ondragend={(e) => {
-          e.originalEvent?.stopPropagation()
-          const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
-          setLngLat(coords as [number, number]);
-        }}
       >
         {props.children}
       </Marker>
       <Popup content='You are here' anchor="top" ref={setPopupInstance} />
-      <p style={{
-        padding: "1.1rem 2rem",
-        color: 'black',
-        background: "white"
-      }}>{`long, lat: ${lnglat()}`}</p>
     </Maplibre>
   );
 };

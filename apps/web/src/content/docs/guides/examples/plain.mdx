@@ -1,6 +1,10 @@
 ---
 title: Plain Map
 description: A minimal example showing only the base map.
+tableOfContents: false
+sidebar: 
+    order: 1
+
 ---
 
 This example depicts a plain map using the default [vector tiles](https://github.com/maplibre/demotiles) from the maplibre gl js repository, a navigation controll and a scale controll.
@@ -15,7 +19,7 @@ import PlainMap from "../../../../components/examples/Plainmap"
 import type { Component } from "solid-js";
 import { Maplibre, NavigationControl, ScaleControl, GlobeControl } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-const Plainmap: Component<{}> = (props) => {
+const Plainmap: Component = (props) => {
   
   return (
         <Maplibre
