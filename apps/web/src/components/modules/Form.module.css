@@ -1,0 +1,59 @@
+.select,
+::picker(select) {
+    appearance: base-select;
+}
+
+.slider {
+    input,
+    label {
+        display: block;
+        font-family: inherit;
+        font-size: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px;
+        height: 30px;
+    }
+    label {
+        margin-bottom: 5px;
+    }
+
+}   
+
+.control_panel {
+    position: absolute;
+    top: 27%;
+    display: flex;
+    max-width: 36ch;
+    width: 100%;
+    flex-direction: column;
+    gap: 4px;
+    border-end-end-radius: 12px;
+    background: oklab(from rgb(51, 51, 51) l a b );
+    backdrop-filter: blur(50px);
+    padding: 12px;
+    font-size: small;
+    align-items: stretch;
+
+
+    div:first-child {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px
+    }
+
+    div:nth-child(2) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px
+    }
+}
+@media (min-width: 450px) {
+   .control_panel {
+       top: 25.7%;
+   } 
+}

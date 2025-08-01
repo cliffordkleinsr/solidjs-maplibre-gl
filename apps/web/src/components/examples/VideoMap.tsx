@@ -1,0 +1,61 @@
+import { createSignal, type Component } from "solid-js";
+import {
+  GlobeControl,
+  Maplibre,
+  RasterLayer,
+  Source,
+} from "solidjs-maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
+
+const VideoMap: Component = (props) => {
+  const [playing, setPlaying] = createSignal(true);
+
+  return (
+    <Maplibre
+      style={{
+        height: "55vh",
+        "min-height": "300px",
+      }}
+      options={{
+        center: [-122.514426, 37.562984],
+        minZoom: 14,
+        zoom: 17,
+        bearing: -96,
+        style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+      }}
+      onclick={(e) => {
+        const source = e.target.getSource("vid") as maplibregl.VideoSource;
+        setPlaying(!playing());
+        playing() ? source?.play() : source.pause();
+      }}
+    >
+      <Source
+        id="vid"
+        source={{
+          type: "video",
+          urls: [
+            "https://static-assets.mapbox.com/mapbox-gl-js/drone.mp4",
+            "https://static-assets.mapbox.com/mapbox-gl-js/drone.webm",
+          ],
+          coordinates: [
+            [-122.51596391201019, 37.56238816766053],
+            [-122.51467645168304, 37.56410183312965],
+            [-122.51309394836426, 37.563391708549425],
+            [-122.51423120498657, 37.56161849366671],
+          ],
+        }}
+      >
+        <RasterLayer
+          layer={{
+            paint: {
+              "raster-opacity": 0.7,
+            },
+          }}
+        />
+      </Source>
+      <GlobeControl />
+    </Maplibre>
+  );
+};
+
+export default VideoMap;

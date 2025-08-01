@@ -1,0 +1,120 @@
+---
+title: Color Relief
+description: Render hypsometric tints using DEM sources.
+tableOfContents: false
+sidebar: 
+    order: 12
+---
+With maplibre you can render hypsometric tints using DEM sources
+
+import ColorRelief from '../../../../components/examples/ColorRelief'
+
+<div class="not-content">
+    <ColorRelief client:visible />
+</div>
+
+```tsx
+import {
+  createSignal,
+  For,
+  type Component,
+  type JSX,
+  type ParentComponent,
+} from "solid-js";
+import styles from "../modules/Form.module.css";
+import { COLOR_RAMPS } from "./utils";
+import {
+  ColorReliefLayer,
+  GlobeControl,
+  HillshadeLayer,
+  Light,
+  Maplibre,
+  Source,
+  TerrainControl,
+} from "solidjs-maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
+
+type ColorRamp = keyof typeof COLOR_RAMPS;
+const [colorRamp, setColorRamp] = createSignal<ColorRamp>("LINZ");
+const [hillshade, setHillshade] = createSignal(0.4);
+const ColorRelief: Component = (props) => {
+  return (
+    <>
+      <Maplibre
+        style={{
+          height: "55vh",
+          "min-height": "300px",
+        }}
+        options={{
+          center: [11.5, 47.3],
+          zoom: 9.5,
+        }}
+      >
+        <Source
+          id="terrain"
+          source={{
+            type: "raster-dem",
+            tiles: [
+              "https://demotiles.maplibre.org/terrain-tiles/{z}/{x}/{y}.png",
+            ],
+            minzoom: 0,
+            maxzoom: 12,
+            tileSize: 256,
+            attribution:
+              "<a href='https://earth.jaxa.jp/en/data/policy/'>AW3D30 (JAXA)</a>",
+          }}
+        >
+          <TerrainControl
+            position="top-right"
+            options={{
+              source: "terrain",
+              exaggeration: 1.5,
+            }}
+          />
+        </Source>
+        <Source
+          source={{
+            type: "raster-dem",
+            tiles: [
+              "https://demotiles.maplibre.org/terrain-tiles/{z}/{x}/{y}.png",
+            ],
+            minzoom: 0,
+            maxzoom: 12,
+            tileSize: 256,
+            attribution:
+              "<a href='https://earth.jaxa.jp/en/data/policy/'>AW3D30 (JAXA)</a>",
+          }}
+        >
+          <ColorReliefLayer
+            layer={{
+              paint: {
+                "color-relief-opacity": 1,
+                "color-relief-color": COLOR_RAMPS[colorRamp()],
+              },
+            }}
+          />
+          <HillshadeLayer
+            layer={{
+              paint: {
+                "hillshade-method": "igor",
+                "hillshade-exaggeration": hillshade(),
+                "hillshade-highlight-color": "#ffffff",
+              },
+            }}
+          />
+        </Source>
+        <Light anchor="map" />
+        <GlobeControl />
+      </Maplibre>
+      <div class={styles.control_panel}>
+        <div>
+          <Select />
+        </div>
+        <div>
+          <Slider />
+        </div>
+      </div>
+    </>
+  );
+};
+```

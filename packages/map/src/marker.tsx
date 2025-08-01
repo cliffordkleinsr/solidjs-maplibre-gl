@@ -1,26 +1,26 @@
 import { useMapEffect } from "./map.jsx";
 import * as maplibre from "maplibre-gl";
 import {
-	createEffect,
-	createSignal,
-	onCleanup,
-	onMount,
-	Show,
-	splitProps,
+  createEffect,
+  createSignal,
+  onCleanup,
+  onMount,
+  Show,
+  splitProps,
 } from "solid-js";
 import type { JSX } from "solid-js";
 import { addEventListeners, type MapEvents } from "./util.js";
 import { Portal } from "solid-js/web";
 import { children as resolveChildren } from "solid-js";
 type MarkerEvents = Pick<
-	MapEvents<maplibre.Marker>,
-	"onclick" | "ondrag" | "ondragstart" | "ondragend"
+  MapEvents<maplibre.Marker>,
+  "onclick" | "ondrag" | "ondragstart" | "ondragend"
 >;
 
 export type MarkerProps = Partial<maplibre.MarkerOptions> & {
-	lnglat: maplibre.LngLatLike;
-	children?: JSX.Element;
-	popup?: maplibre.Popup;
+  lnglat: maplibre.LngLatLike;
+  children?: JSX.Element;
+  popup?: maplibre.Popup;
 } & MarkerEvents;
 
 /**
@@ -81,66 +81,66 @@ export type MarkerProps = Partial<maplibre.MarkerOptions> & {
  * @returns {JSX.Element} A div containing the marker element
  */
 export function Marker(initial: MarkerProps) {
-	const [props, rest] = splitProps(initial, ["lnglat", "children", "popup"]);
-	const [events, options] = splitProps(rest, [
-		"onclick",
-		"ondrag",
-		"ondragstart",
-		"ondragend",
-	]);
-	const [marker, setMarker] = createSignal<maplibre.Marker>();
-	let el: HTMLDivElement | undefined;
+  const [props, rest] = splitProps(initial, ["lnglat", "children", "popup"]);
+  const [events, options] = splitProps(rest, [
+    "onclick",
+    "ondrag",
+    "ondragstart",
+    "ondragend",
+  ]);
+  const [marker, setMarker] = createSignal<maplibre.Marker>();
+  let el: HTMLDivElement | undefined;
 
-	const resolved = resolveChildren(() => props.children);
+  const resolved = resolveChildren(() => props.children);
 
-	const hasChildren = () => {
-		const c = resolved();
-		return Array.isArray(c) ? c.some(Boolean) : Boolean(c);
-	};
-	onMount(() => {
-		if (!el) return;
-		setMarker(
-			new maplibre.Marker({
-				...options,
-				element: hasChildren() ? el : undefined, //hasValidChildren(props.children) ? el : undefined,
-			}),
-		);
-	});
+  const hasChildren = () => {
+    const c = resolved();
+    return Array.isArray(c) ? c.some(Boolean) : Boolean(c);
+  };
+  onMount(() => {
+    if (!el) return;
+    setMarker(
+      new maplibre.Marker({
+        ...options,
+        element: hasChildren() ? el : undefined, //hasValidChildren(props.children) ? el : undefined,
+      }),
+    );
+  });
 
-	createEffect(() => {
-		const m = marker();
-		if (!m) return;
+  createEffect(() => {
+    const m = marker();
+    if (!m) return;
 
-		addEventListeners(m, events);
+    addEventListeners(m, events);
 
-		m.setLngLat(props.lnglat);
+    m.setLngLat(props.lnglat);
 
-		m.setDraggable(options.draggable);
-		m.setOffset(options.offset ?? [0, 0]);
-		m.setOpacity(options.opacity, options.opacityWhenCovered);
-		m.setPitchAlignment(options.pitchAlignment);
-		m.setRotation(options.rotation);
-		m.setRotationAlignment(options.rotationAlignment);
-		m.setSubpixelPositioning(options.subpixelPositioning ?? false);
+    m.setDraggable(options.draggable);
+    m.setOffset(options.offset ?? [0, 0]);
+    m.setOpacity(options.opacity, options.opacityWhenCovered);
+    m.setPitchAlignment(options.pitchAlignment);
+    m.setRotation(options.rotation);
+    m.setRotationAlignment(options.rotationAlignment);
+    m.setSubpixelPositioning(options.subpixelPositioning ?? false);
 
-		if (props.popup) {
-			m.setPopup(props.popup); // <-- Attach popup to marker
-		}
-	});
+    if (props.popup) {
+      m.setPopup(props.popup); // <-- Attach popup to marker
+    }
+  });
 
-	useMapEffect((map) => {
-		marker()?.addTo(map);
-	});
+  useMapEffect((map) => {
+    marker()?.addTo(map);
+  });
 
-	onCleanup(() => {
-		marker()?.remove();
-	});
+  onCleanup(() => {
+    marker()?.remove();
+  });
 
-	return (
-		<div ref={el}>
-			<Show when={marker()?.getElement()}>
-				<Portal mount={marker()?.getElement()}>{resolved()}</Portal>
-			</Show>
-		</div>
-	);
+  return (
+    <div ref={el}>
+      <Show when={marker()?.getElement()}>
+        <Portal mount={marker()?.getElement()}>{resolved()}</Portal>
+      </Show>
+    </div>
+  );
 }

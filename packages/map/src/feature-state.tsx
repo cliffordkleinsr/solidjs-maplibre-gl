@@ -2,10 +2,10 @@ import { createMemo, onCleanup, splitProps } from "solid-js";
 import { useMapEffect, useMap } from "./map";
 
 type FeatureStateProps = {
-	source: string;
-	sourceLayer?: string;
-	id?: string | number;
-	state: Record<string, any>;
+  source: string;
+  sourceLayer?: string;
+  id?: string | number;
+  state: Record<string, any>;
 };
 
 /**
@@ -40,49 +40,49 @@ type FeatureStateProps = {
  * @returns An empty fragment
  */
 export function FeatureState(initial: FeatureStateProps) {
-	const [props] = splitProps(initial, ["source", "sourceLayer", "id", "state"]);
+  const [props] = splitProps(initial, ["source", "sourceLayer", "id", "state"]);
 
-	let prevKeys: string[] = [];
-	let prevIdentifier:
-		| { source: string; sourceLayer?: string; id?: string | number }
-		| undefined;
+  let prevKeys: string[] = [];
+  let prevIdentifier:
+    | { source: string; sourceLayer?: string; id?: string | number }
+    | undefined;
 
-	useMapEffect((map) => {
-		const currentIdentifier = {
-			source: props.source,
-			sourceLayer: props.sourceLayer,
-			id: props.id,
-		};
-		const newKeys = new Set(Object.keys(props.state));
+  useMapEffect((map) => {
+    const currentIdentifier = {
+      source: props.source,
+      sourceLayer: props.sourceLayer,
+      id: props.id,
+    };
+    const newKeys = new Set(Object.keys(props.state));
 
-		// Remove outdated keys if the target feature changed or keys were removed
-		if (prevIdentifier?.id !== undefined) {
-			const targetChanged =
-				prevIdentifier.id !== currentIdentifier.id ||
-				prevIdentifier.source !== currentIdentifier.source ||
-				prevIdentifier.sourceLayer !== currentIdentifier.sourceLayer;
+    // Remove outdated keys if the target feature changed or keys were removed
+    if (prevIdentifier?.id !== undefined) {
+      const targetChanged =
+        prevIdentifier.id !== currentIdentifier.id ||
+        prevIdentifier.source !== currentIdentifier.source ||
+        prevIdentifier.sourceLayer !== currentIdentifier.sourceLayer;
 
-			for (const key of prevKeys) {
-				if (targetChanged || !newKeys.has(key)) {
-					map.removeFeatureState(prevIdentifier, key);
-				}
-			}
-		}
-		// Apply new feature state
-		if (currentIdentifier.id !== undefined) {
-			map.setFeatureState(currentIdentifier, props.state);
-		}
+      for (const key of prevKeys) {
+        if (targetChanged || !newKeys.has(key)) {
+          map.removeFeatureState(prevIdentifier, key);
+        }
+      }
+    }
+    // Apply new feature state
+    if (currentIdentifier.id !== undefined) {
+      map.setFeatureState(currentIdentifier, props.state);
+    }
 
-		// Update snapshots
-		prevKeys = Array.from(newKeys);
-		prevIdentifier = currentIdentifier;
-		onCleanup(() => {
-			if (!map || !prevIdentifier?.id) return;
-			for (const key of prevKeys) {
-				map.removeFeatureState(prevIdentifier, key);
-			}
-		});
-	});
+    // Update snapshots
+    prevKeys = Array.from(newKeys);
+    prevIdentifier = currentIdentifier;
+    onCleanup(() => {
+      if (!map || !prevIdentifier?.id) return;
+      for (const key of prevKeys) {
+        map.removeFeatureState(prevIdentifier, key);
+      }
+    });
+  });
 
-	return <></>;
+  return <></>;
 }

@@ -3,7 +3,6 @@ import { FullScreenControl, Maplibre } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const Fullscreen: Component = (props) => {
-  
   return (
     <Maplibre
       style={{
@@ -11,11 +10,10 @@ const Fullscreen: Component = (props) => {
         "min-height": "300px",
       }}
       options={{
-        style:
-          "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+        style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
       }}
     >
-         <FullScreenControl position="top-left" />
+      <FullScreenControl position="top-left" />
     </Maplibre>
   );
 };

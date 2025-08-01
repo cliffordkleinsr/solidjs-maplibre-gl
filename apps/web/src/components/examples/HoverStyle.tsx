@@ -44,7 +44,6 @@ const HoverStyle: Component<{}> = (props) => {
       >
         <FillLayer
           layer={{
-            type: "fill",
             paint: {
               "fill-color": "#00ff55",
               // Change the opacity for the hovered feature
@@ -66,7 +65,6 @@ const HoverStyle: Component<{}> = (props) => {
         />
         <LineLayer
           layer={{
-            type: "line",
             paint: {
               "line-color": "#00ff55",
               "line-opacity": [
@@ -79,19 +77,22 @@ const HoverStyle: Component<{}> = (props) => {
             },
           }}
         />
-        {/* <Show when={hoveredFeature()?.id} keyed>
-            <FeatureState
-                    source="geojson"
-                    id={hoveredFeature()?.id}
-                    state={{ hover: true, selected: false }}
-                />
-        </Show> */}
         <Show when={hoveredFeature()} keyed>
-          <Popup
-            position={lnglat()}
-            closeButton={false}
-            content={`${hoveredFeature()?.properties.STATE_NAME}`}
-          />
+          {(hov) => (
+            <>
+              <FeatureState
+                source="geojson"
+                id={hov.id}
+                state={{ hover: true, selected: false }}
+              />
+              <Popup
+                position={lnglat()}
+                closeButton={false}
+                content={`${hov.properties.STATE_NAME}`}
+                // ref={setPopupInstance}
+              />
+            </>
+          )}
         </Show>
       </Source>
     </Maplibre>

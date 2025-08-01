@@ -1,5 +1,11 @@
 import type { Component } from "solid-js";
-import { CircleLayer, GlobeControl, Maplibre, Source, SymbolLayer } from "solidjs-maplibre-gl";
+import {
+  CircleLayer,
+  GlobeControl,
+  Maplibre,
+  Source,
+  SymbolLayer,
+} from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const Cluster: Component = (props) => {
@@ -8,7 +14,6 @@ const Cluster: Component = (props) => {
       style={{
         height: "55vh",
         "min-height": "300px",
-        "margin-top": "12px",
       }}
       options={{
         center: [180, 35],
@@ -29,7 +34,6 @@ const Cluster: Component = (props) => {
       >
         <CircleLayer
           layer={{
-            type: "circle",
             filter: ["has", "point_count"],
             paint: {
               "circle-color": [
@@ -49,7 +53,6 @@ const Cluster: Component = (props) => {
 
         <SymbolLayer
           layer={{
-            type: "symbol",
             filter: ["has", "point_count"],
             layout: {
               "text-field": "{point_count_abbreviated}",
@@ -59,7 +62,6 @@ const Cluster: Component = (props) => {
         />
         <CircleLayer
           layer={{
-            type: "circle",
             filter: ["!has", "point_count"],
             paint: {
               "circle-color": "#ffff00",

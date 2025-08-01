@@ -27,33 +27,33 @@ const MarkerDrag: Component = (props) => {
   const [lnglat, setLngLat] = createSignal<LngLatLike>([12.88, 48.1]);
   return (
     <Maplibre
-      style={{
-        height: "400px",
-        width: "100%",
-      }}
-      options={{
-        style: "https://tiles.openfreemap.org/styles/positron",
-        zoom: 10,
-        center: [12.86, 48.07],
-      }}
+        style={{
+          height: "400px",
+          width: "100%",
+        }}
+        options={{
+          style: "https://tiles.openfreemap.org/styles/positron",
+          zoom: 10,
+          center: [12.86, 48.07],
+        }}
     >
       <Marker
-        lnglat={lnglat()}
-        draggable
-        ondrag={(e) => {
-          const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
-          setLngLat(coords as [number, number]);
-        }}
-        ondragend={(e) => {
-          const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
-          setLngLat(coords as [number, number]);
-        }}
+          lnglat={lnglat()}
+          draggable
+          ondrag={(e) => {
+            const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
+            setLngLat(coords as [number, number]);
+          }}
+          ondragend={(e) => {
+            const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
+            setLngLat(coords as [number, number]);
+          }}
       />
 
       <p style={{
-        padding: "1.1rem 2rem",
-        color: 'black',
-        background: "white"
+          padding: "1.1rem 2rem",
+          color: 'black',
+          background: "white"
       }}>{`long, lat: ${lnglat()}`}</p>
     </Maplibre>
   );

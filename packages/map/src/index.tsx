@@ -5,29 +5,31 @@ export { Popup } from "./popup";
 export { Source } from "./source";
 export { FeatureState } from "./feature-state";
 export { useMapEffect, useMap } from "./map";
+export { Sky } from "./sky";
+export { Light } from "./light";
 
 export {
-	CircleLayer,
-	LineLayer,
-	SymbolLayer,
-	HillshadeLayer,
-	FillLayer,
-	FillExtrusionLayer,
-	RasterLayer,
-	HeatmapLayer,
-	BackgroundLayer,
-	ColorReliefLayer,
-	createLayerComponent,
+  CircleLayer,
+  LineLayer,
+  SymbolLayer,
+  HillshadeLayer,
+  FillLayer,
+  FillExtrusionLayer,
+  RasterLayer,
+  HeatmapLayer,
+  BackgroundLayer,
+  ColorReliefLayer,
+  createLayerComponent,
 } from "./layer";
 
 export {
-	NavigationControl,
-	ScaleControl,
-	AttributionControl,
-	FullScreenControl,
-	GeolocateControl,
-	LogoControl,
-	TerrainControl,
-	GlobeControl,
-	createControl,
+  NavigationControl,
+  ScaleControl,
+  AttributionControl,
+  FullScreenControl,
+  GeolocateControl,
+  LogoControl,
+  TerrainControl,
+  GlobeControl,
+  createControl,
 } from "./controls";
