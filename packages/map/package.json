@@ -1,6 +1,6 @@
 {
 	"name": "solidjs-maplibre-gl",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Build interactive web maps effortlessly with MapLibre GL JS and Solidjs.",
 	"license": "MIT",
 	"author": "Clifford ",

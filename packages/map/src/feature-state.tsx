@@ -1,10 +1,11 @@
-import { onCleanup, splitProps } from "solid-js";
+import { createMemo, onCleanup, splitProps } from "solid-js";
 import { useMapEffect, useMap } from "./map";
 
 type FeatureStateProps = {
-  source: string;
-  id?: string | number;
-  state: Record<string, any>;
+	source: string;
+	sourceLayer?: string;
+	id?: string | number;
+	state: Record<string, any>;
 };
 
 /**
@@ -32,22 +33,56 @@ type FeatureStateProps = {
  *
  * @param props - The component props
  * @param props.source - The ID of the source
+ * @param sourceLayer - The reference `Source` layer
  * @param props.id - The ID of the feature to set state for (optional)
  * @param props.state - An object containing the state to set for the feature(s)
  *
  * @returns An empty fragment
  */
 export function FeatureState(initial: FeatureStateProps) {
-  const [props] = splitProps(initial, ["source", "id", "state"]);
+	const [props] = splitProps(initial, ["source", "sourceLayer", "id", "state"]);
 
-  useMapEffect((map) => {
-    map.setFeatureState({ source: props.source, id: props.id }, props.state);
-    onCleanup(() => {
-      if (map) {
-        map.setFeatureState({ source: props.source, id: props.id }, {});
-      }
-    });
-  });
+	let prevKeys: string[] = [];
+	let prevIdentifier:
+		| { source: string; sourceLayer?: string; id?: string | number }
+		| undefined;
 
-  return <></>;
+	useMapEffect((map) => {
+		const currentIdentifier = {
+			source: props.source,
+			sourceLayer: props.sourceLayer,
+			id: props.id,
+		};
+		const newKeys = new Set(Object.keys(props.state));
+
+		// Remove outdated keys if the target feature changed or keys were removed
+		if (prevIdentifier?.id !== undefined) {
+			const targetChanged =
+				prevIdentifier.id !== currentIdentifier.id ||
+				prevIdentifier.source !== currentIdentifier.source ||
+				prevIdentifier.sourceLayer !== currentIdentifier.sourceLayer;
+
+			for (const key of prevKeys) {
+				if (targetChanged || !newKeys.has(key)) {
+					map.removeFeatureState(prevIdentifier, key);
+				}
+			}
+		}
+		// Apply new feature state
+		if (currentIdentifier.id !== undefined) {
+			map.setFeatureState(currentIdentifier, props.state);
+		}
+
+		// Update snapshots
+		prevKeys = Array.from(newKeys);
+		prevIdentifier = currentIdentifier;
+		onCleanup(() => {
+			if (!map || !prevIdentifier?.id) return;
+			for (const key of prevKeys) {
+				map.removeFeatureState(prevIdentifier, key);
+			}
+		});
+	});
+
+	return <></>;
 }
