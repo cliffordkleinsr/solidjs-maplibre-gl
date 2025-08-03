@@ -6,7 +6,7 @@
 
 [![bun](https://img.shields.io/badge/maintained%20with-bun-cc00ff.svg?style=for-the-badge&logo=bun)](https://bun.sh/)
 
-[![NPM Version](https://img.shields.io/npm/v/@shadcn-svelte-chat/cli)](https://www.npmjs.com/package/@shadcn-svelte-chat/cli) [![NPM Downloads](https://img.shields.io/npm/dw/@shadcn-svelte-chat/cli)](https://www.npmjs.com/package/@shadcn-svelte-chat/cli) [![Demo Website](https://img.shields.io/website?url=https%3A%2F%2Fshadcn-svelte-chat.vercel.app%2F)](https://shadcn-svelte-chat.vercel.app/) [![GitHub Repo stars](https://img.shields.io/github/stars/cliffordkleinsr/shadcn-svelte-chat)](https://github.com/cliffordkleinsr/shadcn-svelte-chat)
+[![NPM Version](https://img.shields.io/npm/v/solidjs-maplibre-gl)](https://www.npmjs.com/package/solidjs-maplibre-gl) [![NPM Downloads](https://img.shields.io/npm/dw/solidjs-maplibre-gl)](https://www.npmjs.com/package/solidjs-maplibre-gl) [![Demo Website](https://img.shields.io/website?url=https%3A%2F%2Fsolidjs-maplibre-gl.vercel.app%2F)](https://solidjs-maplibre-gl.vercel.app/) [![GitHub Repo stars](https://img.shields.io/github/stars/cliffordkleinsr/solidjs-maplibre-gl)](https://github.com/cliffordkleinsr//solidjs-maplibre-g)
 
 🗺️ Build interactive web maps effortlessly with [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) and [Solidjs](https://www.solidjs.com/).
 
@@ -17,7 +17,7 @@
 
 ## Quick start
 
-👉 Documentaion and Live Demos: https://svelte-maplibre-gl.mierune.dev/examples/
+👉 Documentation and Live Demos: [Here](https://solidjs-maplibre-gl.vercel.app/)
 
 ## Installation
 
@@ -55,7 +55,7 @@ Everyone is welcome to contribute to this project! There are many ways to suppor
 
 ## Authors
 
-See Contributors [list](https://github.com/MIERUNE/svelte-maplibre-gl/graphs/contributors)
+See Contributors [list](https://github.com/cliffordkleinsr/solidjs-maplibre-gl/graphs/contributors)
 Use it:
 
 ---
