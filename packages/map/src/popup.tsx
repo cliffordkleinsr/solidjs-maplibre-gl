@@ -3,10 +3,10 @@ import * as maplibre from "maplibre-gl";
 import { createEffect, onCleanup, splitProps } from "solid-js";
 
 export type PopUpProps = Partial<maplibre.PopupOptions> & {
-  position?: maplibre.LngLatLike;
-  content?: string;
-  ref?: (popup: maplibre.Popup) => void;
-  onClose?: () => void;
+	position?: maplibre.LngLatLike;
+	content?: string;
+	ref?: (popup: maplibre.Popup) => void;
+	onClose?: () => void;
 };
 
 /**
@@ -46,31 +46,31 @@ export type PopUpProps = Partial<maplibre.PopupOptions> & {
 
 export type PopupInstance = maplibre.Popup;
 export function Popup(initial: PopUpProps) {
-  const [props, options] = splitProps(initial, [
-    "position",
-    "content",
-    "onClose",
-    "ref",
-  ]);
+	const [props, options] = splitProps(initial, [
+		"position",
+		"content",
+		"onClose",
+		"ref",
+	]);
 
-  let popup: maplibre.Popup | undefined;
+	let popup: maplibre.Popup | undefined;
 
-  useMapEffect((map) => {
-    if (!map || !props.content) return;
+	useMapEffect((map) => {
+		if (!map || !props.content) return;
 
-    requestAnimationFrame(() => {
-      popup = new maplibre.Popup(options).setHTML(props.content!);
+		requestAnimationFrame(() => {
+			popup = new maplibre.Popup(options).setHTML(props.content!);
 
-      if (props.position) {
-        popup.setLngLat(props.position).addTo(map); // Standalone popup
-      }
+			if (props.position) {
+				popup.setLngLat(props.position).addTo(map); // Standalone popup
+			}
 
-      if (props.onClose) popup.on("close", props.onClose);
-      if (props.ref) props.ref(popup);
-    });
-  });
+			if (props.onClose) popup.on("close", props.onClose);
+			if (props.ref) props.ref(popup);
+		});
+	});
 
-  onCleanup(() => popup?.remove());
+	onCleanup(() => popup?.remove());
 
-  return <></>;
+	return <></>;
 }

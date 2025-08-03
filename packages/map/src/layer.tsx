@@ -1,24 +1,24 @@
 import * as maplibre from "maplibre-gl";
 import {
-  onCleanup,
-  createUniqueId,
-  splitProps,
-  createMemo,
-  JSX,
+	onCleanup,
+	createUniqueId,
+	splitProps,
+	createMemo,
+	JSX,
 } from "solid-js";
 import { useMapEffect, useMap } from "./map.jsx";
 import { useSource } from "./source.jsx";
 import { deepEqual } from "./util.js";
 
 type LayerEvents = Partial<{
-  [P in keyof maplibre.MapLayerEventType as `on${P}`]: (
-    e: maplibre.MapLayerEventType[P],
-  ) => void;
+	[P in keyof maplibre.MapLayerEventType as `on${P}`]: (
+		e: maplibre.MapLayerEventType[P],
+	) => void;
 }>;
 
 type BaseLayerProps<T extends maplibre.LayerSpecification> = {
-  id?: string;
-  layer: Omit<T, "id" | "source" | "type">;
+	id?: string;
+	layer: Omit<T, "id" | "source" | "type">;
 } & LayerEvents;
 
 /**
@@ -61,80 +61,80 @@ type BaseLayerProps<T extends maplibre.LayerSpecification> = {
  * - You **do not** need to pass `type`, `id`, or `source` in the `layer` prop — they are auto-injected.
  */
 export function createLayerComponent<T extends maplibre.LayerSpecification>(
-  type: T["type"],
+	type: T["type"],
 ) {
-  return function LayerComponent(initialProps: BaseLayerProps<T>): JSX.Element {
-    const [props, events] = splitProps(initialProps, ["id", "layer"]);
-    const id = createMemo(() => props.id ?? createUniqueId());
-    const sourceId = useSource();
+	return function LayerComponent(initialProps: BaseLayerProps<T>): JSX.Element {
+		const [props, events] = splitProps(initialProps, ["id", "layer"]);
+		const id = createMemo(() => props.id ?? createUniqueId());
+		const sourceId = useSource();
 
-    useMapEffect((map) => {
-      if (!sourceId || map.getLayer(id())) return;
+		useMapEffect((map) => {
+			if (!sourceId || map.getLayer(id())) return;
 
-      map.addLayer({
-        ...props.layer,
-        id: id(),
-        source: sourceId,
-        type,
-      } as T);
-    });
+			map.addLayer({
+				...props.layer,
+				id: id(),
+				source: sourceId,
+				type,
+			} as T);
+		});
 
-    useMapEffect((map) => {
-      if (!map.getLayer(id())) return;
+		useMapEffect((map) => {
+			if (!map.getLayer(id())) return;
 
-      for (const [k, v] of Object.entries(props.layer.paint ?? {})) {
-        const old = map.getPaintProperty(id(), k);
-        if (!deepEqual(old, v)) {
-          map.setPaintProperty(id(), k, v);
-        }
-      }
+			for (const [k, v] of Object.entries(props.layer.paint ?? {})) {
+				const old = map.getPaintProperty(id(), k);
+				if (!deepEqual(old, v)) {
+					map.setPaintProperty(id(), k, v);
+				}
+			}
 
-      const oldFilter = map.getFilter(id()); //@ts-expect-error
-      if (!deepEqual(oldFilter, props.layer.filter)) {
-        //@ts-expect-error
-        map.setFilter(id(), props.layer.filter);
-      }
-    });
+			const oldFilter = map.getFilter(id()); //@ts-expect-error
+			if (!deepEqual(oldFilter, props.layer.filter)) {
+				//@ts-expect-error
+				map.setFilter(id(), props.layer.filter);
+			}
+		});
 
-    useMapEffect((map) => {
-      for (const [key, handler] of Object.entries(events)) {
-        if (!key.startsWith("on")) continue;
-        const name = key.slice(2).toLowerCase();
-        map.on(name as never, id(), handler as never);
-        onCleanup(() => map.off(name as never, id(), handler));
-      }
-    });
+		useMapEffect((map) => {
+			for (const [key, handler] of Object.entries(events)) {
+				if (!key.startsWith("on")) continue;
+				const name = key.slice(2).toLowerCase();
+				map.on(name as never, id(), handler as never);
+				onCleanup(() => map.off(name as never, id(), handler));
+			}
+		});
 
-    onCleanup(() => {
-      const map = useMap()?.();
-      if (map?.getLayer(id())) {
-        map.removeLayer(id());
-      }
-    });
+		onCleanup(() => {
+			const map = useMap()?.();
+			if (map?.getLayer(id())) {
+				map.removeLayer(id());
+			}
+		});
 
-    return <></>;
-  };
+		return <></>;
+	};
 }
 
 export const CircleLayer =
-  createLayerComponent<maplibre.CircleLayerSpecification>("circle");
+	createLayerComponent<maplibre.CircleLayerSpecification>("circle");
 export const LineLayer =
-  createLayerComponent<maplibre.LineLayerSpecification>("line");
+	createLayerComponent<maplibre.LineLayerSpecification>("line");
 export const SymbolLayer =
-  createLayerComponent<maplibre.SymbolLayerSpecification>("symbol");
+	createLayerComponent<maplibre.SymbolLayerSpecification>("symbol");
 export const HillshadeLayer =
-  createLayerComponent<maplibre.HillshadeLayerSpecification>("hillshade");
+	createLayerComponent<maplibre.HillshadeLayerSpecification>("hillshade");
 export const FillLayer =
-  createLayerComponent<maplibre.FillLayerSpecification>("fill");
+	createLayerComponent<maplibre.FillLayerSpecification>("fill");
 export const FillExtrusionLayer =
-  createLayerComponent<maplibre.FillExtrusionLayerSpecification>(
-    "fill-extrusion",
-  );
+	createLayerComponent<maplibre.FillExtrusionLayerSpecification>(
+		"fill-extrusion",
+	);
 export const RasterLayer =
-  createLayerComponent<maplibre.RasterLayerSpecification>("raster");
+	createLayerComponent<maplibre.RasterLayerSpecification>("raster");
 export const HeatmapLayer =
-  createLayerComponent<maplibre.HeatmapLayerSpecification>("heatmap");
+	createLayerComponent<maplibre.HeatmapLayerSpecification>("heatmap");
 export const BackgroundLayer =
-  createLayerComponent<maplibre.BackgroundLayerSpecification>("background");
+	createLayerComponent<maplibre.BackgroundLayerSpecification>("background");
 export const ColorReliefLayer =
-  createLayerComponent<maplibre.ColorReliefLayerSpecification>("color-relief");
+	createLayerComponent<maplibre.ColorReliefLayerSpecification>("color-relief");

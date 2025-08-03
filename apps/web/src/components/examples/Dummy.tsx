@@ -2,9 +2,8 @@ import type { Component } from "solid-js";
 import { Maplibre } from "solidjs-maplibre-gl";
 
 const Dummy: Component<{}> = (props) => {
-  
   return (
-     <Maplibre
+    <Maplibre
       style={{
         height: "55vh",
         "min-height": "300px",
@@ -12,10 +11,7 @@ const Dummy: Component<{}> = (props) => {
       options={{
         zoom: 0,
         style: "https://tiles.openfreemap.org/styles/liberty",
-        
       }}
-      
-      
     ></Maplibre>
   );
 };

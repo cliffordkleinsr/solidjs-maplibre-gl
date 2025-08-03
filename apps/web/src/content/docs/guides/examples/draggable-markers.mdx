@@ -35,6 +35,7 @@ const MarkerDrag: Component = (props) => {
           style: "https://tiles.openfreemap.org/styles/positron",
           zoom: 10,
           center: [12.86, 48.07],
+          
         }}
     >
       <Marker
@@ -48,6 +49,7 @@ const MarkerDrag: Component = (props) => {
             const coords = e.target.getLngLat().toArray().map(v => +v.toFixed(3));
             setLngLat(coords as [number, number]);
           }}
+          
       />
 
       <p style={{

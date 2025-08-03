@@ -15,7 +15,7 @@ import {
 } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
-const Plainmap: Component = (props) => {
+const App: Component = (props) => {
   return (
     <Maplibre
       style={{
@@ -26,15 +26,9 @@ const Plainmap: Component = (props) => {
         zoom: 3.5,
         center: [12.86271398748148, 48.067124540317785],
       }}
-    >
-      <NavigationControl />
-      <ScaleControl />
-      <GlobeControl />
-    </Maplibre>
+    />
   );
 };
-
-export default Plainmap;
 ```
 
 ## Properties
@@ -49,7 +43,7 @@ Aside from the props listed below, the `Map` component supports all [options](ht
 
 Map container id.
 
-###### `style`: JSX.CSSProperties
+###### `style`: JSX.CSSProperties | undefined
 
 Default: `{position: 'relative', width: '100%', height: '100%'}`
 
@@ -97,25 +91,25 @@ The initial [pitch](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/Ma
 
 The initial [bearing](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/MapOptions/#bearing) (rotation) of the map, measured in degrees counter-clockwise from north.
 
-#### `minZoom`: number
+###### `minZoom`: number
 
 Default: `0`
 
 The minimum zoom level of the map (0-24).
 
-#### `maxZoom`: number
+###### `maxZoom`: number
 
 Default: `22`
 
 The maximum zoom level of the map (0-24).
 
-#### `minPitch`: number
+###### `minPitch`: number
 
 Default: `0`
 
 The minimum pitch of the map (0-85).
 
-#### `maxPitch`: number
+###### `maxPitch`: number
 
 Default: `60`
 
@@ -125,49 +119,49 @@ The maximum pitch of the map (0-85).
 
 ---
 
-#### `boxZoom`: boolean
+###### `boxZoom`: boolean
 
 Default: `true`
 
 If `true`, the "box zoom" interaction is enabled. See [BoxZoomHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/BoxZoomHandler/).
 
-#### `doubleClickZoom`: boolean
+###### `doubleClickZoom`: boolean
 
 Default: `true`
 
 If `true`, the "double click to zoom" interaction is enabled. See [DoubleClickZoomHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/DoubleClickZoomHandler/).
 
-#### `dragRotate`: boolean
+###### `dragRotate`: boolean
 
 Default: `true`
 
 If `true`, the "drag to rotate" interaction is enabled. See [DragRotateHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/DragRotateHandler/).
 
-#### `dragPan`: boolean | Object
+###### `dragPan`: boolean | Object
 
 Default: `true`
 
 If `true`, the "drag to pan" interaction is enabled. Optionally accept an object value that is the options to [DragPanHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/DragPanHandler/).
 
-#### `keyboard`: boolean
+###### `keyboard`: boolean
 
 Default: `true`
 
 If `true`, keyboard shortcuts are enabled. See [KeyboardHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/KeyboardHandler/).
 
-#### `scrollZoom`: boolean | Object
+###### `scrollZoom`: boolean | Object
 
 Default: `true`
 
 If `true`, the "scroll to zoom" interaction is enabled. Optionally accept an object value that is the options to [ScrollZoomHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/ScrollZoomHandler/).
 
-#### `touchPitch`: boolean | Object
+###### `touchPitch`: boolean | Object
 
 Default: `true`
 
 If `true`, the "drag to pitch" interaction is enabled. Optionally accept an object value that is the options to [TwoFingersTouchPitchHandler](https://maplibre.org/maplibre-gl-js/docs/API/classes/TwoFingersTouchPitchHandler/).
 
-#### `touchZoomRotate`: boolean | Object
+###### `touchZoomRotate`: boolean | Object
 
 Default: `true`
 
@@ -177,19 +171,19 @@ If `true`, the "pinch to rotate and zoom" interaction is enabled. Optionally acc
 
 ---
 
-###### `onresize`: (event: MapEvent) => void
+###### `onresize`: (event: [MapEvent](./types.md#mapevent)) => void
 
 Called when the map has been resized.
 
-###### `onload`: (event: MapEvent) => void
+###### `onload`: (event: [MapEvent](./types.md#mapevent)) => void
 
 Called after all necessary resources have been downloaded and the first visually complete rendering of the map has occurred.
 
-###### `onrender`: (event: MapEvent) => void
+###### `onrender`: (event: [MapEvent](./types.md#mapevent)) => void
 
 Called whenever the map is drawn to the screen.
 
-###### `onidle`: (event: MapEvent) => void
+###### `onidle`: (event: [MapEvent](./types.md#mapevent)) => void
 
 Called after the last frame rendered before the map enters an "idle" state:
 
@@ -197,101 +191,81 @@ Called after the last frame rendered before the map enters an "idle" state:
 - All currently requested tiles have loaded
 - All fade/transition animations have completed
 
-###### `onremove`: (event: MapEvent) => void
+###### `onremove`: (event: [MapEvent](./types.md#mapevent)) => void
 
 Called when the map has been removed.
 
-###### `onerror`: (event: ErrorEvent) => void
+###### `onerror`: (event: [ErrorEvent](./types.md#errorevent)) => void
 
 Default: `evt => console.error(evt.error)`
 
 Called when an error occurs.
 
-###### `onmousedown`: (event: MapLayerMouseEvent) => void
+###### `onmousedown`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is pressed within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `onmouseup`: (event: MapLayerMouseEvent) => void
+###### `onmouseup`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is released within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `onmouseover`: (event: MapLayerMouseEvent) => void
+###### `onmouseover`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is moved within the map. As you move the cursor across a web page containing a map, the event will fire each time it enters the map or any child elements.
 
-###### `onmouseenter`: (event: MapLayerMouseEvent) => void
+###### `onmouseenter`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
-Called when a pointing device (usually a mouse) enters a visible portion of the layer(s) specified by `interactiveLayerIds` from outside that layer or outside the map canvas.
+Called when a pointing device (usually a mouse) enters a visible portion of the layer(s).
 
-###### `onmousemove`: (event: MapLayerMouseEvent) => void
+###### `onmousemove`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is moved while the cursor is inside the map. As you move the cursor across the map, the event will fire every time the cursor changes position within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `onmouseleave`: (event: MapLayerMouseEvent) => void
+###### `onmouseleave`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) leaves a visible portion of the layer(s) specified by `interactiveLayerIds` or moves from the layer to outside the map canvas.
 
-###### `onmouseout`: (event: MapLayerMouseEvent) => void
+###### `onmouseout`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a point device (usually a mouse) leaves the map's canvas.
 
-###### `onclick`: (event: MapLayerMouseEvent) => void
+###### `onclick`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is pressed and released at the same point on the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `ondblclick`: (event: MapLayerMouseEvent) => void
+###### `ondblclick`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is pressed and released twice at the same point on the map in rapid succession.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `oncontextmenu`: (event: MapLayerMouseEvent) => void
+###### `oncontextmenu`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
 
 Called when the right button of the mouse is clicked or the context menu key is pressed within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `onwheel`: (event: MapWheelEvent) => void
+###### `onwheel`: (event: [MapWheelEvent](./types.md#mapwheelevent)) => void
 
 Called when a wheel event occurs within the map.
 
-###### `ontouchstart`: (event: MapLayerTouchEvent) => void
+###### `ontouchstart`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
 
 Called when a `touchstart` event occurs within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `ontouchend`: (event: MapLayerTouchEvent) => void
+###### `ontouchend`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
 
 Called when a `touchend` event occurs within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `ontouchmove`: (event: MapLayerTouchEvent) => void
+###### `ontouchmove`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
 
 Called when a `touchmove` event occurs within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `ontouchcancel`: (event: MapLayerTouchEvent) => void
+###### `ontouchcancel`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
 
 Called when a `touchcancel` event occurs within the map.
 
-If `interactiveLayerIds` is specified, the event will contain an additional `features` field that contains features under the cursor from the specified layer.
-
-###### `onmovestart`: (event: ViewStateChangeEvent) => void
+###### `onmovestart`: (event: [ViewStateChangeEvent](./types.md#viewstatechangeevent)) => void
 
 Called just before the map begins a transition from one view to another.
 
-###### `onmove`: (event: ViewStateChangeEvent) => void
+###### `onmove`: (event: [ViewStateChangeEvent](./types.md#viewstatechangeevent)) => void
 
 Called repeatedly during an animated transition from one view to another.
 

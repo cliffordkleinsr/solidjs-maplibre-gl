@@ -6,12 +6,11 @@
     "@astrojs/starlight": "^0.35.2",
     "@maplibre/maplibre-gl-geocoder": "^1.9.0",
     "@types/d3-fetch": "^3.0.7",
-    "astro": "5.12.7",
+    "astro": "5.12.8",
     "d3-fetch": "^3.0.1",
     "sharp": "^0.34.3",
     "solid-devtools": "^0.34.3",
-    "solid-js": "^1.9.7",
-    "solidjs-maplibre-gl": "^0.0.8"
+    "solid-js": "^1.9.7"
   },
   "scripts": {
     "dev": "astro dev",
@@ -20,5 +19,8 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "solidjs-maplibre-gl": "^0.1.0"
+  }
 }
