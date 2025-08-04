@@ -6,7 +6,7 @@
 
 [![bun](https://img.shields.io/badge/maintained%20with-bun-cc00ff.svg?style=for-the-badge&logo=bun)](https://bun.sh/)
 
-[![NPM Version](https://img.shields.io/npm/v/solidjs-maplibre-gl)](https://www.npmjs.com/package/solidjs-maplibre-gl) [![NPM Downloads](https://img.shields.io/npm/dw/solidjs-maplibre-gl)](https://www.npmjs.com/package/solidjs-maplibre-gl) [![Demo Website](https://img.shields.io/website?url=https%3A%2F%2Fsolidjs-maplibre-gl.vercel.app%2F)](https://solidjs-maplibre-gl.vercel.app/) [![GitHub Repo stars](https://img.shields.io/github/stars/cliffordkleinsr/solidjs-maplibre-gl)](https://github.com/cliffordkleinsr//solidjs-maplibre-g)
+[![NPM Version](https://img.shields.io/npm/v/solidjs-maplibre-gl)](https://www.npmjs.com/package/solidjs-maplibre-gl) [![NPM Downloads](https://img.shields.io/npm/dw/solidjs-maplibre-gl)](https://www.npmjs.com/package/solidjs-maplibre-gl) [![Demo Website](https://img.shields.io/website?url=https%3A%2F%2Fsolid-maplibre-gl.pages.dev%2F)](https://solidjs-maplibre-gl.vercel.app/) [![GitHub Repo stars](https://img.shields.io/github/stars/cliffordkleinsr/solidjs-maplibre-gl)](https://github.com/cliffordkleinsr//solidjs-maplibre-g)
 
 🗺️ Build interactive web maps effortlessly with [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) and [Solidjs](https://www.solidjs.com/).
 
@@ -17,7 +17,7 @@
 
 ## Quick start
 
-👉 Documentation and Live Demos: [Here](https://solidjs-maplibre-gl.vercel.app/)
+👉 Documentation and Live Demos: [Here](https://solid-maplibre-gl.pages.dev/)
 
 ## Installation
 

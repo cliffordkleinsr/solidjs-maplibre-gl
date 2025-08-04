@@ -10,7 +10,8 @@
     "d3-fetch": "^3.0.1",
     "sharp": "^0.34.3",
     "solid-devtools": "^0.34.3",
-    "solid-js": "^1.9.7"
+    "solid-js": "^1.9.7",
+    "wrangler": "^4.27.0"
   },
   "scripts": {
     "dev": "astro dev",
