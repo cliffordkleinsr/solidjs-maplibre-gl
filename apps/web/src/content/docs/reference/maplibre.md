@@ -10,8 +10,6 @@ import type { Component } from "solid-js";
 import {
   Maplibre,
   NavigationControl,
-  ScaleControl,
-  GlobeControl,
 } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 

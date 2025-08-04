@@ -23,16 +23,16 @@
 
 .control_panel {
     position: absolute;
-    top: 27%;
+    top: 28.2%;
     display: flex;
-    max-width: 36ch;
+    max-width: 30ch;
     width: 100%;
     flex-direction: column;
     gap: 4px;
     border-end-end-radius: 12px;
     background: oklab(from rgb(51, 51, 51) l a b );
     backdrop-filter: blur(50px);
-    padding: 12px;
+    padding: 13px;
     font-size: small;
     align-items: stretch;
 
@@ -55,5 +55,6 @@
 @media (min-width: 450px) {
    .control_panel {
        top: 25.7%;
+       max-width: 36ch;
    } 
 }
