@@ -1,16 +1,15 @@
 ---
 title: Maplibre
 description: Default map entry point.
+sidebar:
+  order: 1
 ---
 
 Solidjs component that wraps maplibre-gl's [Map](https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/) class.
 
 ```tsx
 import type { Component } from "solid-js";
-import {
-  Maplibre,
-  NavigationControl,
-} from "solidjs-maplibre-gl";
+import { Maplibre, NavigationControl } from "solidjs-maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const App: Component = (props) => {
@@ -31,6 +30,8 @@ const App: Component = (props) => {
 
 ## Properties
 
+---
+
 Aside from the props listed below, the `Map` component supports all [options](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/MapOptions/) of the `Map` class constructor. Beware that this is not an exhaustive list of all props. Different base map libraries may offer different options and default values. When in doubt, refer to your base map library's documentation.
 
 ### Layout options
@@ -39,7 +40,7 @@ Aside from the props listed below, the `Map` component supports all [options](ht
 
 ###### `id`: string
 
-Map container id.
+Unique identifier of the source. If not provided, a default id will be assigned using Solidjs [createUniqueId](https://docs.solidjs.com/reference/component-apis/create-unique-id) genertor.
 
 ###### `style`: JSX.CSSProperties | undefined
 
@@ -73,7 +74,7 @@ If `true`, multiple copies of the world will be rendered, when zoomed out.
 
 ---
 
-###### `center`: LngLatLike
+###### `center`: [LngLatLike](../types#lnglatlike)
 
 The longitude & latitude of the map center.
 
@@ -169,19 +170,19 @@ If `true`, the "pinch to rotate and zoom" interaction is enabled. Optionally acc
 
 ---
 
-###### `onresize`: (event: [MapEvent](./types.md#mapevent)) => void
+###### `onresize`: (event: [MapEvent](../types#mapevent)) => void
 
 Called when the map has been resized.
 
-###### `onload`: (event: [MapEvent](./types.md#mapevent)) => void
+###### `onload`: (event: [MapEvent](../types#mapevent)) => void
 
 Called after all necessary resources have been downloaded and the first visually complete rendering of the map has occurred.
 
-###### `onrender`: (event: [MapEvent](./types.md#mapevent)) => void
+###### `onrender`: (event: [MapEvent](../types#mapevent)) => void
 
 Called whenever the map is drawn to the screen.
 
-###### `onidle`: (event: [MapEvent](./types.md#mapevent)) => void
+###### `onidle`: (event: [MapEvent](../types#mapevent)) => void
 
 Called after the last frame rendered before the map enters an "idle" state:
 
@@ -189,87 +190,95 @@ Called after the last frame rendered before the map enters an "idle" state:
 - All currently requested tiles have loaded
 - All fade/transition animations have completed
 
-###### `onremove`: (event: [MapEvent](./types.md#mapevent)) => void
+###### `onremove`: (event: [MapEvent](../types#mapevent)) => void
 
 Called when the map has been removed.
 
-###### `onerror`: (event: [ErrorEvent](./types.md#errorevent)) => void
+###### `onerror`: (event: [ErrorEvent](../types#errorevent)) => void
 
 Default: `evt => console.error(evt.error)`
 
 Called when an error occurs.
 
-###### `onmousedown`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onmousedown`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is pressed within the map.
 
-###### `onmouseup`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onmouseup`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is released within the map.
 
-###### `onmouseover`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onmouseover`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is moved within the map. As you move the cursor across a web page containing a map, the event will fire each time it enters the map or any child elements.
 
-###### `onmouseenter`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onmouseenter`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) enters a visible portion of the layer(s).
 
-###### `onmousemove`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onmousemove`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is moved while the cursor is inside the map. As you move the cursor across the map, the event will fire every time the cursor changes position within the map.
 
-###### `onmouseleave`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onmouseleave`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
-Called when a pointing device (usually a mouse) leaves a visible portion of the layer(s) specified by `interactiveLayerIds` or moves from the layer to outside the map canvas.
+Called when a pointing device (usually a mouse) leaves a visible portion of the layer(s) or moves from the layer to outside the map canvas.
 
-###### `onmouseout`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onmouseout`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a point device (usually a mouse) leaves the map's canvas.
 
-###### `onclick`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `onclick`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is pressed and released at the same point on the map.
 
-###### `ondblclick`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `ondblclick`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when a pointing device (usually a mouse) is pressed and released twice at the same point on the map in rapid succession.
 
-###### `oncontextmenu`: (event: [MapLayerMouseEvent](./types.md#maplayermouseevent) ) => void
+###### `oncontextmenu`: (event: [MapLayerMouseEvent](../types#maplayermouseevent) ) => void
 
 Called when the right button of the mouse is clicked or the context menu key is pressed within the map.
 
-###### `onwheel`: (event: [MapWheelEvent](./types.md#mapwheelevent)) => void
+###### `onwheel`: (event: [MapWheelEvent](../types#mapwheelevent)) => void
 
 Called when a wheel event occurs within the map.
 
-###### `ontouchstart`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
+###### `ontouchstart`: (event: [MapLayerTouchEvent](../types#maplayertouchevent)) => void
 
 Called when a `touchstart` event occurs within the map.
 
-###### `ontouchend`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
+###### `ontouchend`: (event: [MapLayerTouchEvent](../types#maplayertouchevent)) => void
 
 Called when a `touchend` event occurs within the map.
 
-###### `ontouchmove`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
+###### `ontouchmove`: (event: [MapLayerTouchEvent](../types#maplayertouchevent)) => void
 
 Called when a `touchmove` event occurs within the map.
 
-###### `ontouchcancel`: (event: [MapLayerTouchEvent](./types.md#maplayertouchevent)) => void
+###### `ontouchcancel`: (event: [MapLayerTouchEvent](../types#maplayertouchevent)) => void
 
 Called when a `touchcancel` event occurs within the map.
 
-###### `onmovestart`: (event: [ViewStateChangeEvent](./types.md#viewstatechangeevent)) => void
+###### `onmovestart`: (event: [ViewStateChangeEvent](../types#viewstatechangeevent)) => void
 
 Called just before the map begins a transition from one view to another.
 
-###### `onmove`: (event: [ViewStateChangeEvent](./types.md#viewstatechangeevent)) => void
+###### `onmove`: (event: [ViewStateChangeEvent](../types#viewstatechangeevent)) => void
 
 Called repeatedly during an animated transition from one view to another.
 
 ## Source
 
+---
+
 [map.tsx](https://github.com/cliffordkleinsr/solidjs-maplibre-gl/blob/main/packages/map/src/map.tsx)
+
+## Examples
+
+---
+
+See all the examples
 
 ## Further Reading
 

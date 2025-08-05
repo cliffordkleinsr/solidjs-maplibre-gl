@@ -1,1 +1,1 @@
-https://solidjs-maplibre-gl.vercel.app//sitemap.xml
+Sitemap: https://solid-maplibre-gl.pages.dev/sitemap.xml

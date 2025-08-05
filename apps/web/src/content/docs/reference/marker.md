@@ -1,6 +1,8 @@
 ---
 title: Marker
 description: Solidjs component that wraps maplibre-gl's Marker class.
+sidebar:
+  order: 2
 ---
 
 Solidjs component that wraps maplibre-gl's [Marker](https://maplibre.org/maplibre-gl-js/docs/API/classes/Marker/) class.
@@ -67,17 +69,17 @@ Default: `false`
 
 If `true`, the marker is able to be dragged to a new position on the map.
 
-###### `lnglat`: LngLatLike
+###### `lnglat`: [LngLatLike](../types#lnglatlike)
 
 Required. The longitude & latitude of the anchor location.
 
-###### `offset`: [PointLike](./types.md#pointlike)
+###### `offset`: [PointLike](../types#pointlike)
 
 Default: `null`
 
-The offset in pixels as a [PointLike](./types.md#pointlike) object to apply relative to the element's center. Negatives indicate left and up.
+The offset in pixels as a [PointLike](../types#pointlike) object to apply relative to the element's center. Negatives indicate left and up.
 
-###### `popup`: Popup | undefined | JSX.Element {ref}
+###### `popup`: Popup | undefined | JSX.Element
 
 An instance of the [Popup](https://maplibre.org/maplibre-gl-js/docs/API/classes/Popup/) class to attach to this marker. If undefined or null, any popup set on this Marker instance is unset.
 
@@ -89,15 +91,15 @@ CSS style override that applies to the marker's container.
 
 ---
 
-###### `onclick`: (evt: [MapEvent](./types.md#mapevent)) => void
+###### `onclick`: (evt: [MapEvent](../types#mapevent)) => void
 
 Called when the marker is clicked on.
 
-###### `ondrag`: (evt: [MarkerDragEvent](./types.md#markerdragevent)) => void
+###### `ondrag`: (evt: [MarkerDragEvent](../types#markerdragevent)) => void
 
 Called while dragging, if `draggable` is `true`.
 
-###### `ondragend`: (evt: [MarkerDragEvent](./types.md#markerdragevent)) => void
+###### `ondragend`: (evt: [MarkerDragEvent](../types#markerdragevent)) => void
 
 Called when dragging ends, if `draggable` is `true`.
 
@@ -106,6 +108,14 @@ Called when dragging ends, if `draggable` is `true`.
 ---
 
 [marker.tsx](https://github.com/cliffordkleinsr/solidjs-maplibre-gl/blob/main/packages/map/src/marker.tsx)
+
+## Examples
+
+---
+
+[Marker and Popup](../../guides/examples/marker-popup)
+
+[Geocode with Nomatim](../../guides/examples/nomatim)
 
 ## Further Reading
 

@@ -1,6 +1,8 @@
 ---
 title: Popup
 description: Solidjs  component that wraps maplibre-gl's Popup class.
+sidebar:
+  order: 3
 ---
 
 Solidjs component that wraps maplibre-gl's [Popup](https://maplibre.org/maplibre-gl-js/docs/API/classes/Popup/) class.
@@ -54,7 +56,7 @@ If unset, the anchor will be dynamically set to ensure the popup falls within th
 
 Space-separated CSS class names to add to popup container.
 
-###### `offset`: number | [PointLike](./types.md#pointlike) | Record\<string, [PointLike](./types.md#pointlike)\>
+###### `offset`: number | [PointLike](../types#pointlike) | Record<string, [PointLike](../types#pointlike)>
 
 Default: `null`
 
@@ -84,7 +86,7 @@ Signal setter that links to a popup instance
 
 ---
 
-###### `onClose`: (evt: [PopupEvent](./types.md#popupevent)) => void {#onclose}
+###### `onClose`: (evt: [PopupEvent](../types#popupevent)) => void {#onclose}
 
 Called when the popup is closed by the user clicking on the close button or outside (if `closeOnClick: true`).
 
@@ -106,6 +108,14 @@ Any [options](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/PopupOpt
 ---
 
 [popup.tsx](https://github.com/cliffordkleinsr/solidjs-maplibre-gl/blob/main/packages/map/src/popup.tsx)
+
+## Examples
+
+---
+
+[Marker and Popup](../../guides/examples/marker-popup)
+
+[Hover Styles](../../guides/examples/hover-styles)
 
 ## Further Reading
 

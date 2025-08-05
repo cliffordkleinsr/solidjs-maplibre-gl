@@ -6,7 +6,7 @@ import solidJs from '@astrojs/solid-js';
 
 // https://astro.build/config
 export default defineConfig({
-//   site: 'https://solidjs-maplibre-gl.vercel.app/',
+  site: 'https://solid-maplibre-gl.pages.dev/',
   integrations: [starlight({
       title: 'Solid MapLibre GL',
       favicon: '/favicons/mapllibre.svg',
