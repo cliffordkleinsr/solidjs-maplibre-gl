@@ -1,18 +1,18 @@
 import * as maplibre from "maplibre-gl";
 import {
-  createContext,
-  JSX,
-  onCleanup,
-  useContext,
-  createUniqueId,
-  createMemo,
+	createContext,
+	JSX,
+	onCleanup,
+	useContext,
+	createUniqueId,
+	createMemo,
 } from "solid-js";
 import { useMapEffect, useMap } from "./map.jsx";
 
 export interface SourceProps {
-  id?: string;
-  source: maplibre.SourceSpecification;
-  children?: JSX.Element;
+	id?: string;
+	source: maplibre.SourceSpecification;
+	children?: JSX.Element;
 }
 
 export const SourceIdContext = createContext<string | undefined>();
@@ -47,62 +47,74 @@ export const useSource = () => useContext(SourceIdContext);
  * @see {@link https://maplibre.org/maplibre-gl-js-docs/api/sources/ MapLibre GL JS Sources}
  */
 export function Source(props: SourceProps) {
-  const id = createMemo(() => props.id ?? createUniqueId());
+	const id = createMemo(() => props.id ?? createUniqueId());
 
-  useMapEffect((map) => {
-    if (!map.getSource(id())) {
-      map.addSource(id(), props.source);
-    }
+	useMapEffect((map) => {
+		if (!map.getSource(id())) {
+			map.addSource(id(), props.source);
+		}
 
-    const source = map.getSource(id());
-    switch (props.source.type) {
-      case "image": {
-        const img = source as maplibre.ImageSource;
-        img.updateImage({
-          url: props.source.url,
-          coordinates: props.source.coordinates,
-        });
-        break;
-      }
+		const source = map.getSource(id());
+		switch (props.source.type) {
+			case "image": {
+				const img = source as maplibre.ImageSource;
+				img.updateImage({
+					url: props.source.url,
+					coordinates: props.source.coordinates,
+				});
+				break;
+			}
 
-      case "raster":
-      case "vector":
-      case "raster-dem": {
-        const src = source as maplibre.Source;
-        if ("setTiles" in src && props.source.tiles) {
-          (source as any).setTiles(props.source.tiles);
-        }
-        if ("setUrl" in src && props.source.url) {
-          (source as any).setUrl(props.source.url);
-        }
-        break;
-      }
+			case "raster":
+			case "vector":
+			case "raster-dem": {
+				const src = source as maplibre.Source;
+				if ("setTiles" in src && props.source.tiles) {
+					(source as any).setTiles(props.source.tiles);
+				}
+				if ("setUrl" in src && props.source.url) {
+					(source as any).setUrl(props.source.url);
+				}
+				break;
+			}
 
-      case "video": {
-        const video = source as maplibre.VideoSource;
-        if (props.source.coordinates) {
-          video.setCoordinates?.(props.source.coordinates);
-        }
-        break;
-      }
-    }
-    // if (source && props.source.type === 'image') {
-    //   // Use updateImage for image sources
-    //   //@ts-expect-error
-    //   source.updateImage({
-    //     url: props.source.url,
-    //     coordinates: props.source.coordinates
-    //   });
-    // }
-  });
+			case "video": {
+				const video = source as maplibre.VideoSource;
+				if (props.source.coordinates) {
+					video.setCoordinates?.(props.source.coordinates);
+				}
+				break;
+			}
+		}
+		// if (source && props.source.type === 'image') {
+		//   // Use updateImage for image sources
+		//   //@ts-expect-error
+		//   source.updateImage({
+		//     url: props.source.url,
+		//     coordinates: props.source.coordinates
+		//   });
+		// }
+		onCleanup(() => {
+			if (map.getSource(id())) {
+				//  Identify all layers using thiis source
+				const layerIds = map.getStyle().layers?.map((l) => l.id) ?? [];
+				// iterate over all layerids
+				for (const layerId of layerIds) {
+					const layer = map.getLayer(layerId);
+					// If there"s a layer and the layersource uses that id, remove it
+					if (layer && layer.source === id()) {
+						map.removeLayer(layerId);
+					}
+				}
+				// remove the source layer itself once you"ve safely removed the layers using it
+				map.removeSource(id());
+			}
+		});
+	});
 
-  onCleanup(
-    () => useMap()?.()?.getSource(id()) && useMap()?.()?.removeSource(id()),
-  );
-
-  return (
-    <SourceIdContext.Provider value={id()}>
-      {props.children}
-    </SourceIdContext.Provider>
-  );
+	return (
+		<SourceIdContext.Provider value={id()}>
+			{props.children}
+		</SourceIdContext.Provider>
+	);
 }
